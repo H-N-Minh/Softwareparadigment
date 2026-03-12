@@ -1,0 +1,13 @@
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Interpreter.scala:222:23: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: ExpAnonFunction(_, _, _), ExpBuiltin(_), ExpFunction(_, _), ExpInteger(_), ExpList(_), ExpOperators(_), ExpString(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m      while (interpret(e, fe, condition) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Parser.scala:28:22: non-variable type argument Node in type pattern List[Node] (the underlying of List[Node]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m      case (e, args: List[Node]) => NodeCall(e, args)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Interpreter.scala:222:23: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: ExpAnonFunction(_, _, _), ExpBuiltin(_), ExpFunction(_, _), ExpInteger(_), ExpList(_), ExpOperators(_), ExpString(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m      while (interpret(e, fe, condition) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
