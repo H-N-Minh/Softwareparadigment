@@ -1,0 +1,327 @@
+\documentclass[10pt, a4paper]{article}
+
+%%%%%%%%%%%%%% CONFIG %%%%%%%%%%%%%%%
+%\usepackage[ngerman]{babel}
+%\usepackage[english]{babel}
+\newcommand{\GroupNumber}{90} 
+\newcommand{\AssignmentNumber}{2.2}
+\newcommand{\Semester}{SS 2025}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage{fullpage}
+\usepackage[outline]{contour}
+\usepackage{ulem}
+\usepackage{listings}
+
+
+
+\pagestyle{fancy}
+\setlength{\headheight}{12.4pt}
+\setlength{\headsep}{1.5\headheight}
+\fancypagestyle{plain}{
+  \fancyfoot{}
+  \lhead{Assignment \AssignmentNumber}
+  \rhead{Page \thepage}
+}
+\normalem
+
+\author{Khaled Elnaggar 12033937,\\ Ilma Bajramovic, \\Nhat Minh Hoang 12029170}
+\date{}
+\title{
+  Softwareparadigmen \Semester,
+  Übungsblatt \AssignmentNumber \\
+  Gruppe \GroupNumber
+}
+
+\newcounter{bsp}
+\setcounter{bsp}{3}
+\newcommand{\task}{\stepcounter{bsp}\subsection*{Beispiel \arabic{bsp}}}
+\newcommand{\subtask}[2]{\textbf{#1} #2}
+
+\newcommand{\ul}[1]{%
+  \begingroup%
+  \renewcommand{\ULdepth}{2.1pt}%
+  \contourlength{0.35pt}%
+  \uline{\phantom{#1}}\llap{\contour{white}{#1}}%
+  \endgroup%
+}
+\newcommand{\Prog}[1]{\texttt{\ul{#1}}}
+
+\newcommand{\Interp}[2][]{I(\delta,\omega#1,\Prog{#2})}
+\newcommand{\ValueOf}[2][]{\omega#1(\Prog{#2})}
+\newcommand{\equMod}[2]{\omega#1' \sim_{#2} \omega#1}
+\newcommand{\equModAss}[2]{\equMod{#1}{#2}, \omega#1'(\texttt{#2}) = }
+
+\newcommand{\quantorOmega}[2]{\ \omega#1',\ \equMod{#1}{#2}:\ }
+
+\newcommand{\ifThen}[1]{\Prog{if\ #1\ then}\\}
+\newcommand{\elseThen}{\Prog{else}\\}
+\newcommand{\elseIfThen}[1]{\Prog{else\ if\ #1\ then}\\}
+\newcommand{\ifThenElse}[3]{\Prog{if #1 then } #2 \Prog{ else } #3}
+
+\newcommand{\caseIf}[2]{#1 & \text{if } #2 \\}
+\newcommand{\caseElseIf}[2]{#1 & \text{else if } #2 \\}
+\newcommand{\caseElse}[1]{#1 & \text{otherwise}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+
+\begin{document}
+\pagestyle{plain}
+\maketitle
+ 
+\task
+
+\begin{enumerate}
+ \item \textbf{"greater" function:}\\
+Given is the definition of ``greater'' func:
+$$
+\text{greater} = \lambda a \cdot \lambda b \cdot (\text{zero?} \ a) \ \text{false} \ ((\text{zero?} \ b) \ \text{true} \ (\text{greater} \ (\text{pred} \ a) \ (\text{pred} \ b)))
+$$
+
+Let's apply the input ``2 1'' to the function:
+\begin{align*}
+\text{greater} \ 2 \ 1 &= (\lambda a \cdot \lambda b \cdot (\text{zero?} \ a) \ \text{false} \ ((\text{zero?} \ b) \ \text{true} \ (\text{greater} \ (\text{pred} \ a) \ (\text{pred} \ b)))) \ 2 \ 1 \\
+&= (\lambda b \cdot (\text{zero?} \ 2) \ \text{false} \ ((\text{zero?} \ b) \ \text{true} \ (\text{greater} \ (\text{pred} \ 2) \ (\text{pred} \ b)))) \ 1 
+\quad \quad \text{(a = 2)} \\
+&= (\text{zero?} \ 2) \ \text{false} \ ((\text{zero?} \ 1) \ \text{true} \ (\text{greater} \ (\text{pred} \ 2) \ (\text{pred} \ 1))) 
+\quad \quad \quad \quad \quad      \text{(b = 1)} \\
+&= \text{false} \ \text{false} \ (\text{false} \ \text{true} \ (\text{greater} \ 1 \ 0)) 
+\quad \quad \quad \quad \quad \quad \quad \quad \quad \text{(reduction of zero? and pred)} \\
+&= \text{false} \ \text{true} \ (\text{greater} \ 1 \ 0) 
+\hspace{15em} \text{(reduction of false)} \\
+&= \text{greater} \ 1 \ 0
+\end{align*}
+
+So the result of ``greater 2 1'' is the same as result of ``greater 1 0''. Let’s now evaluate that:
+\begin{align*}
+\text{greater} \ 1 \ 0 &= (\lambda a \cdot \lambda b \cdot ((\text{zero?} \ a) \ \text{false} \ ((\text{zero?} \ b) \ \text{true} \ (\text{greater} \ (\text{pred} \ a) \ (\text{pred} \ b))))) \ 1 \ 0 \\
+&= (\lambda b \cdot ((\text{zero?} \ 1) \ \text{false} \ ((\text{zero?} \ b) \ \text{true} \ (\text{greater} \ (\text{pred} \ 1) \ (\text{pred} \ b))))) \ 0 
+\hspace{5em} \text{(a = 1)} \\
+&= ((\text{zero?} \ 1) \ \text{false} \ ((\text{zero?} \ 0) \ \text{true} \ (\text{greater} \ (\text{pred} \ 1) \ (\text{pred} \ 0))))
+\hspace{7em} \text{(b = 0)} \\
+&= \text{false} \ \text{false} \ (\text{true} \ \text{true} \ (\text{greater} \ 0 \ \text{false})) \
+\hspace{10em} \text{(reduction of zero? and pred)} \\
+&= \text{true} \ \text{true} \ (\text{greater} \ 0 \ \text{false})
+\hspace{17em} \text{(reduction of false)} \\
+&= \text{true}
+\end{align*}
+
+So the $\beta$-normal form of the expression ``greater 2 1'' is ``true''.
+
+
+    \item \textbf{Find the $\beta$-normal form}
+
+Given the $\lambda$-expression:
+\[
+((\lambda x \cdot \lambda y \cdot x \ z \ y) (\lambda y \cdot f \ y)) \ v \ w
+\]
+We now find its $\beta$-normal form  step by step.
+\begin{align*}
+&((\lambda x \cdot \lambda y \cdot x z y)(\lambda y \cdot f y)) v w \\
+&= ((\lambda x \cdot \lambda a \cdot x z a)(\lambda y \cdot f y)) v w
+&\quad \text{(\(\alpha\)-conversion from y to a)} \\
+&= (\lambda a \cdot (\lambda y \cdot f y) z a) v w 
+&\quad \text{(x = (\(\lambda y \cdot f y\)))} \\
+&= (\lambda y \cdot f y) z v w 
+&\quad \text{(a = v)} \\
+&= f z v w
+&\quad \text{(y = z)} \\
+\end{align*}
+
+\end{enumerate}
+
+
+
+\task
+\begin{enumerate}
+ \item \textbf{implies function}\\
+\[
+implies = \lambda x  \cdot \lambda y  \cdot \ x \ y \ true
+\]
+This works as follow: the 2 arguments 'a' and 'b' will be fed into the func as 'x' and 'y' respectively. Then we will have " a b true ". If a is false, the whole expression will be true, else if a is true, the expression will have same truth value as b. This results in the same output as 'a' implies 'b'. \\
+
+
+ \item \textbf{even function}\\
+ The main idea is to recursively count from 0 to the given number, with 0 outputs True, 1 outputs False, 2 outputs True,... so the truth value alternates for each number. So first we need a 'Not' function:\\
+ \[
+ Not = \lambda y \cdot  \ y \ false \ true
+ \]
+ Now we can implement the idea above: if the current number is 0 then returns True, else we perform 'even' on its pred number (using 'pred' func) and invert the result (using 'not' func). This should be done recursively until the given number gets deducted to 0, which then outputs True.
+ \[
+ even = \lambda x \cdot (zero? x) \ true \ (not (even (pred \ x)))
+ \]
+ Now we combine 'not' and 'even' to create the final form of the func 'even':
+ \[
+ even = \lambda x \cdot (zero? x) \ true \ ((\lambda y \cdot  \ y \ false \ true) (even (pred \ x)))
+ \]
+ 
+\end{enumerate}
+
+
+
+\task
+\textbf{Encoding function 1: }
+     \[\pi[len](a) := first(rest(a)) - first(a)\]
+
+   \[
+\begin{aligned}
+\pi[{len}](s_a, t_a)
+  &:=first\bigl(\mathrm{rest}(s_a, t_a)\bigr)
+      \;-\;\mathrm{first}(s_a, t_a),\\
+  &\quad= first(rest(s_a, t_a) - first(s_a, t_a)) \\
+  &\quad= first(t_a) - first(s_a, t_a) \\
+  &\quad= t_a - s_a
+\end{aligned}
+\]
+
+
+\begin{itemize}
+  \item \textbf{Failure found:} 
+    The final result in the encoded function is 
+    \(\mathrm{t_a} - \mathrm{s_a}\), which, according to the definition of the 
+    \(\mathrm{len}\) function, should \emph{not} be the end result. 
+    If we take the example where 
+    \(\mathrm{len}((3,5)) = 3\) (with \(s_a = 3\) and \(t_a = 5\)) 
+    and plug it into the encoding function, we get \(2\), which is incorrect. 
+    Since the slice must cover all indices from \(s_a\) to \(t_a\) 
+    inclusively, the correct result is actually 
+    \(\mathrm{t_a} - \mathrm{s_a} + 1\). 
+    In the counterexample, that is \(5 - 3 + 1 = 3\).
+
+\item \textbf{Corrected} \(\pi[\mathrm{len}]\) function:
+\[\pi[len](a) := first(rest(a)) - first(a) + 1\]
+
+\item \textbf{Proof of correctness:}
+  \begin{align*}
+    \pi(s,t) &:= \mathrm{build}\bigl(s,\;\mathrm{build}(t,\;\mathtt{nil})\bigr), \\[6pt]
+    \mathrm{first}(a) &= s, \\
+    \mathrm{first}(\mathrm{rest}(a)) &= t, \\[6pt]
+    \pi[\mathrm{len}](a) &:= \mathrm{first}\bigl(\mathrm{rest}(a)\bigr) 
+      \;-\;\mathrm{first}(a) \;+\; 1, \\[6pt]
+    \pi[\mathrm{len}]\bigl(\pi((s,t))\bigr)
+      &= \mathrm{first}\bigl(\mathrm{rest}(a)\bigr) 
+        \;-\;\mathrm{first}(a) 
+        \;+\; 1 \\[4pt]
+      &= t \;-\; s \;+\; 1 \\[4pt]
+      &= (t_a - s_a) \;+\; 1 \;=\; \mathrm{len}(s,t).
+  \end{align*}
+\end{itemize}
+
+\textbf{Encoding function 2:}
+     \[\pi[overlaps?](a,b) := first(b) < first(rest(a))\]
+
+\[
+\begin{aligned}
+    \pi[{overlaps?}](a,b) &:= first(s_b,t_b)<first(rest(s_a, t_a))\\
+    & \quad s_b < first(t_a) \\
+    & \quad s_b < t_a 
+\end{aligned}
+\]
+\begin{itemize}
+  \item \textbf{Failure found:}
+  The given encoding checks only the single condition \(s_b < t_a\).
+  According to the definition of the \(\mathrm{overlaps}?\) function, however,
+  it must also require \(s_a \le t_b\). In addition, the encoding uses a strict
+  inequality \((<)\) in place of \(\le\), which excludes slices that only touch
+  at a boundary.
+
+  For instance, consider the slices \((3,5)\) and \((5,9)\). By definition,
+  these slices do overlap at the index \(5\). However, if we follow the original
+  encoded condition \(s_b < t_a\), we get \(5 < 5\), which is \texttt{false}
+
+\item \textbf{Corrected} \(\pi[\mathrm{ovelaps?}]\) function:
+\[\pi[overlaps?](a,b) := first(a) \le first(rest(b)) \wedge first(b) \le first(rest(a)) \]
+\item \textbf{Proof of correctness:}
+\begin{align*}  
+\pi[overlaps?] &:= first(a) \le first(rest(b)) \wedge first(b) \le first(rest(a)) \\
+\pi[overlaps?](\pi((s_a,t_a),(s_b,t_b))) &= first(s_a,t_a) \le first(rest(s_b,t_b) \wedge first(s_b,t_b) \le first(rest(s_a,t_a)) \\
+&= s_a \le t_b \wedge s_b \le t_a
+\end{align*}
+\end{itemize}
+    
+\textbf{Encoding function 3: }
+     \[\pi[cat](a,b) := build(first(a), build(first(rest(b)),nil))\]
+
+
+     \[
+\begin{aligned}
+     \pi[{cat}]((s_a, t_a),(s_b, t_b)) &:= build(first(s_a, t_a), build(first(rest(s_a, s_b)),nil)) \\
+     &= build(s_a, t_b) \\
+     &= [s_a, t_b]
+\end{aligned}
+\]
+
+\begin{itemize}
+    \item \textbf{Failure found: }
+  The encoding constructs its union slice simply by taking the start from the first slice and the end from the second slice, instead of using the lowest and highest value. 
+
+Example: 
+\[
+cat\bigl((5,9),(2,4)\bigr)
+= \bigl(\min(5,2),\;\max(9,4)\bigr)
+= (2,9).
+\]
+
+But using the faulty encoding,
+\[
+\pi[cat]\bigl((5,9),(2,4)\bigr)
+:= build\bigl(\mathrm{first}(5,9),\;build(\mathrm{first}(\mathrm{rest}(2,4)),\;nil)\bigr),
+\]
+we get:
+\[
+= build\bigl(5,\;build(4,\;nil)\bigr)
+= [\,5,\,[\,4,\;nil]] 
+= (5,4).
+\]
+\noindent
+Hence \((5,4)\neq(2,9)\), showing that the faulty encoding does not produce the correct union slice.
+\item \textbf{Corrected encoding: }
+\[\pi[cat](a,b) = build(min(first(a),first(b),build(max(first(rest(a),first(rest(b)), nil)) \]
+\item \textbf{Proof of correctness:}
+\\ We use following definition for \texttt{min} and \texttt{max} encoding:
+
+\[
+\begin{aligned}
+\[
+\pi[\min](x,y)
+:= 
+\begin{cases}
+  x, & \text{if } x \le y,\\[6pt]
+  y, & \text{otherwise}.
+\end{cases}
+\\
+\pi[\max](x,y)
+:= 
+\begin{cases}
+  x, & \text{if } x \ge y,\\[6pt]
+  y, & \text{otherwise}.
+\end{cases}
+\]
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\pi[cat](a,b) 
+&:= build\!\bigl(\min(\text{first}(a), \text{first}(b)),\;
+       build\!\bigl(\max(\text{first}(\text{rest}(a)), \text{first}(\text{rest}(b))),
+             \;\texttt{nil}\bigr)\bigr),\\
+\pi[cat]\bigl((s_a,t_a),(s_b,t_b)\bigr)
+&:= build\!\Bigl(\min\bigl(\text{first}(s_a,t_a), \text{first}(s_b,t_b)\bigr),
+       \;build\!\Bigl(\max\bigl(\text{first}(\text{rest}(s_a,t_a)),
+                                \text{first}(\text{rest}(s_b,t_b))\bigr),
+             \;\texttt{nil}\Bigr)\Bigr)\\
+&= build\!\bigl(\min(s_a, s_b),
+       \;build\!\bigl(\max(t_a, t_b), \;\texttt{nil}\bigr)\bigr)
+\;=\; [\,\min(s_a,s_b),\,[\,\max(t_a,t_b),\,\texttt{nil}]]\\
+&= (\min(s_a,s_b),\,\max(t_a,t_b)).
+\end{aligned}
+\]
+\end{itemize}
+\end{document}

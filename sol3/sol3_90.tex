@@ -1,0 +1,826 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage{amssymb, amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{url}
+\usepackage{fullpage}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{multicol}
+\usepackage{wasysym}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{makecell}
+\usepackage{tikz}
+\usepackage{todonotes}
+\usetikzlibrary{arrows, automata}
+\usepackage[all]{genealogytree}
+
+\usetikzlibrary{arrows}
+
+\pagestyle{fancy}
+
+\setlength{\headheight}{12.4pt}
+\setlength{\headsep}{1.5\headheight}
+\setlength{\parindent}{0ex}
+
+\tikzset{
+  treenode/.style = {align=center, inner sep=0pt, text centered, font=\sffamily},
+}
+
+\lstset{literate={ü}{{\"u}}1}
+
+% Uebungsblatt-Nummer eintragen
+\newcommand{\AssignmentNumber}{3}
+
+\author{}
+
+\date{} % Kein Datum angegeben
+\fancyfoot{} % Seitenzahl unten nicht anzeigen
+
+\lhead{Assignment \AssignmentNumber}
+
+\rhead{Page \thepage}
+
+\title{Softwareparadigms SS 2025, Assignment \AssignmentNumber}
+
+\begin{document}
+
+\newcommand{\seccounter}{\addtocounter{section}{1} \thesection}
+\newcommand{\beispiel}[2]{\subsection*{Task \seccounter: #1 \qquad \textnormal{($#2$ P.)}}}
+\newcommand{\bonusbsp}[2]{\subsection*{BONUS Task #1 \qquad \textnormal{($#2$ P.)}}}
+\maketitle
+\thispagestyle{fancy}
+
+\newcounter{ale}
+\newcommand{\abc}{\item[\alph{ale})]\stepcounter{ale}}
+\newenvironment{liste}{\begin{itemize}}{\end{itemize}}
+\newcommand{\aliste}{\begin{liste} \setcounter{ale}{1}}
+\newcommand{\zliste}{\end{liste}}
+\newenvironment{abcliste}{\aliste}{\zliste}
+\newcommand{\wrd}[1]{\underline{\texttt{#1}}}
+\newcommand{\al}[2]{I_{AL}(#1, \: #2)}
+\newcommand{\alp}[2]{I_{ALP}(#1, \: #2)}
+\newcommand{\term}[2]{I_{T}(\omega^{#1}, \: #2)}
+\newcommand{\termP}[3]{I_{T}(\omega^{#1}, \sigma^{#2}, \: #3)}
+\newcommand{\predicate}[2]{I_{PL}(\omega^{#1}, \: #2)}
+\newcommand{\predicateP}[3]{I_{PL}(\omega^{#1},\sigma^{#2}, \: #3)}
+\newcommand{\block}[2]{\wrd{begin} \: #1 - \: #2 \: \wrd{end}}
+\newcommand{\nenv}[2]{{\color{orange}Env \: \omega^{#1} : \omega^{#1} #2}}
+\newcommand{\nstate}[2]{{\color{brown}State \: \sigma^{#1} : \sigma^{#1} #2}}
+\newcommand{\nr}[1]{{\color{blue}NR: \: #1}}
+\newcommand{\copyEnv}[2]{\sim_{\wrd{#2}}\omega^{#1}}
+\newcommand{\copyState}[3]{\sim_{\omega^{#2}(\wrd{#3})}\sigma^{#1}}
+\newcommand{\interp}[2]{I_\mathcal{T}(\omega^{#1}, \wrd{#2})}
+
+\newcommand{\ts}[1]{\textsubscript{#1}}
+\newcommand{\changed}[1]{{\color{cyan}#1}}
+\lstset{basicstyle=\ttfamily}
+
+\textbf{Submission:}
+The solution has to be submitted via the SAI student git. Using the
+provided latex template is mandatory (No handwritten solutions!). Please check in the \LaTeX{} source
+\textbf{as well as} the compiled PDF. Both files have to follow the naming
+convention '\texttt{sol<assignment number>\_<group number>.<ext>}' (e.g. '\texttt{sol3\_23.tex}').
+
+\textbf{Deadline Assignment 3: 04.06.2025, 17:00 Uhr}
+
+\textbf{Remarks for AL/ALP:}
+\begin{itemize}
+    \item If the data type corresponds to a class of numbers (such as the natural numbers $\mathbb{N}$), the set of function symbols \{$\underline{+}$, $\underline{-}$, $\underline{*}$\} and the set of predicate symbols \{$\underline{lt? }$, $\underline{lteq?}$, $\underline{eq?}$, $\underline{gt?}$, $\underline{gteq?}$\} are assigned to the respective mathematical operators $+$, $-$, $*$, $<$, $\leq$, $=$, $>$, $\geq$. The numbers may be used as constants according to the decimal system.
+
+    \item The infix notation and interpretation commonly used in arithmetic may be used in the target set of the interpretation function via the data type, provided that it is correct and unambiguous.
+
+    \item Specify intermediate steps of the interpretation function. Individual code sections can be abbreviated with $LX - LY$, where $X$ and $Y$ stand for the corresponding line numbers. 
+
+    \item The following notation can be used for nested interpretation functions of ALP: $\alp{\alp{\omega, \sigma}{p_1}}{p_2}$. This simplification of the notation $\alp{\alp{\omega, \sigma}{p_1}(\omega),\alp{\omega, \sigma}{p_1}(\sigma)}{p_2}$ is allowed in this course, since the interpretation function of ALP returns a tuple $(\omega,\sigma)$.
+
+\end{itemize}
+
+\textbf{Remarks for LP:}
+\begin{itemize}
+\item LP $\neq$ Prolog! Only facts and rules of the form: $A := A_1,...,A_k$ should be used to solve the examples, where A and $A_1,...,A_k$ are atomic formulas. Therefore, LP programs defined by you must not contain any cuts, prolog operators, etc.\\
+    Attention: \lstinline{\=} is also a prolog operator that does not exist in LP!
+       \item Follow the format of the \LaTeX  template for proofs using Resultion.
+   \item Always specify the following fields for a resolution step:
+   \begin{itemize}
+   \setlength\itemsep{0mm}
+    \item Q: the query to be processed
+    \item R: the rule used including identifier, e.g. R(A2) for the second rule of \texttt{add(X,Y,Z)}
+    \item $\Theta$: the substitution
+    \item Q$\Theta$: the substituted query, i.e. the query after applying the substitution $\Theta$
+    \item R$\Theta$: the substituted rule, i.e. the rule after applying the substitution $\Theta$
+   \end{itemize}
+   If no variables are substituted in the query or rule, you can omit the corresponding field (Q$\Theta$ or R$\Theta$).
+   \item The scope of a variable only affects the clause in which it occurs directly. Therefore, do not forget to use a separate namespace for each rule! To do this, introduce new variables when you convert a rule into a clause in order to use it for a resolution by marking the variables from the rule with subscripts.
+ 
+\end{itemize}
+\pagebreak
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 1 - AL                                                              %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{AL}{2}
+\begin{enumerate}
+    \item Write a small program $p$ in the language AL over the datatype of natural numbers, which - given two numbers $a$ and $b$, calculates the result of the integer division ($a\ div\ b$) and the remainder ($a\ \%\ b$), where $a$ is the dividend and $b$ the divisor. Note that neither integer division nor the remainder are available as built-ins. You can assume that the numbers $a$ and $b$ are provided in the initial environment $\omega_0$ using the variable names \wrd{a} and \wrd{b}. Formally, the following should hold for your program:
+    \begin{itemize}
+        \item $I_{AL}(\omega^0,p)(\wrd{t}) = \omega^0(\wrd{a})\ div\ \omega^0(\wrd{b})$ and
+        \item $I_{AL}(\omega^0,p)(\wrd{r}) = \omega^0(\wrd{a})\ \%\ \omega^0(\wrd{b})$
+    \end{itemize}
+    \item Evaluate your program using $\omega^0(\wrd{a}) = 5$ and $\omega^0(\wrd{b}) = 3$. Write down the complete environment after executing your program.
+
+
+
+    \subsection{Program $p$:}
+
+\lstset{frame=single,numbers=left}
+\begin{lstlisting}
+begin
+    begin
+        t := 1;
+        r := a;
+    end;
+    while r >= b do
+        r = r - b;
+        t = t + 1;
+    od;
+end
+\end{lstlisting}
+
+\subsection{Evaluation:}
+\begin{center}
+\begin{tabular}{@{}cccl@{}}
+\toprule
+Step & Line executed & Environment \(\omega\) & Evaluation \\ \midrule
+0 &  \(t:=0\) & 
+     t = 0 \) & \\[2pt]
+1 &  \(r:=a\) & 
+     r = 5 & \\[2pt]
+2 & \textsc{While} ( \(5\ge 3\)) & 
+      unchanged & true \\[2pt]
+\;&\quad\ \(r:=r-b\) (5–3) & 
+     r = 2 \\[2pt]
+\;&\quad\ \(t:=t+1\) (0+1) & 
+     t = 1 & \\[2pt]
+3 & \textsc{While} (\(2\ge 3\)) & 
+      loop terminates & false \\ \bottomrule
+\end{tabular}
+\end{center}
+The final environment is:
+ \[
+\boxed{\;
+  \omega^{1} = \omega^{4}
+  = \{\,a=5,\; b=3,\; t=1,\; r=2\,\}
+\;}
+\]
+
+\[
+\begin{aligned}
+I_{AL}(\omega^{0},p)(t) &= 1 = 5 \operatorname{div} 3,\\[4pt]
+I_{AL}(\omega^{0},p)(r) &= 2 = 5 \bmod 3.
+\end{aligned}
+\]
+
+Both required equalities hold.
+    
+    
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 2 - ALP                                                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{AL\textsuperscript{P} }{1}
+Interpret the following program $p2$ using the interpretation function for \textbf{AL\textsuperscript{P}} presented in the lecture. For the initial environment, the following holds: $\omega^0(\wrd{x}) \neq \omega^0(\wrd{y})$. Write down the complete final environment $\omega$ and the complete final store $\sigma$.
+\lstset{frame=single,numbers=left}
+\begin{lstlisting}
+begin
+  begin
+    x := 1;
+    ref y := ref x
+  end;
+  begin
+    y := 10;
+    if gt?(x,1) then
+        x := *(x,y);
+    else
+        x := 0;
+  end
+end
+\end{lstlisting}
+
+\paragraph{Initial configuration.}
+\[
+  \omega_{0} : x \mapsto L_{x},\; y \mapsto L_{y},
+  \qquad L_{x}\neq L_{y},
+  \qquad
+  \sigma_{0}(L_{x}) = v^{0}_{x},\;
+  \sigma_{0}(L_{y}) = v^{0}_{y}.
+\]
+
+\subsection*{Block 1: lines 2-5}
+\[
+  \mathsf{ALP}\bigl(\,\omega_{0},\sigma_{0},
+      \textsf{begin } L2-L5  \textsf{ end}\bigr)
+      \;=\; (\omega^{(4)},\sigma^{(3)}).
+\]
+
+\[
+  \mathsf{ALP}\bigl(\,\omega_{0},\sigma_{0},
+      \textsf{\small begin \kern1pt x := 1; \, ref y := ref x  end}\bigr)
+      \;=\; (\omega^{(4)},\sigma^{(3)}).
+\]
+
+\begin{itemize}
+  \item[\bfseries L3.]
+        \textsf{x := 1}
+
+        \(
+          \sigma^{(3)} = \sigma_{0}[\,L_{x}\!\mapsto 1\,],
+          \qquad
+          \omega\text{ - unchanged}.
+        \)
+
+  \item[\bfseries L4.]
+        \textsf{ref y := ref x}
+
+        \(
+          \omega^{(4)} = \omega_{0}[\,y\!\mapsto L_{x}\,],
+          \qquad
+          \sigma\text{ - unchanged}.
+        \)
+\end{itemize}
+
+\vspace{-0.4\baselineskip}
+\[d
+    \omega^{(4)} : x\mapsto L_{x},\; y\mapsto L_{x}
+    \quad\;|\quad
+    \sigma^{(3)} : L_{x}\mapsto 1,\; L_{y}\mapsto v^{0}_{y}
+\]
+
+\subsection*{Block 2: lines 6-12}
+\[
+  \mathsf{ALP}\bigl(\,\omega^{(4)},\sigma^{(3)},
+    \textsf{\small begin } L6 - L12 \textsf{ end}\bigr)
+    = (\omega_{\mathrm{fin}},\sigma_{\mathrm{fin}}).
+\]
+
+\[
+  \mathsf{ALP}\bigl(\,\omega^{(4)},\sigma^{(3)},
+    \textsf{\small begin y := 10;
+      if gt?(x,1) then x := *(x,y) else x := 0  end}\bigr)
+    = (\omega_{\mathrm{fin}},\sigma_{\mathrm{fin}}).
+\]
+
+\begin{itemize}
+  \item[\bfseries L7.]
+        \textsf{y := 10}
+
+        \(
+          \sigma^{(5)} = \sigma^{(3)}[\,L_{x}\!\mapsto 10\,].
+        \)
+
+  \item[\bfseries L8.]
+        Check the condition \textsf{gt?(x,1)}.  
+        x = 10, which is greater than 1, hence \emph{true}, so we proceed to the Line 9.
+  
+  \item[\bfseries L9.] 
+        \textsf{x := *(x,y)} 
+        Both arguments evaluate to \(10\);  
+        product \(10\!\times\!10 = 100\).
+
+        \(
+          \sigma^{(6)} = \sigma^{(5)}[\,L_{x}\!\mapsto 100\,].
+        \)
+\end{itemize}
+
+The \textsf{else}-branch is skipped;  
+
+\paragraph{Final state.}
+\[
+  \boxed{
+    \omega_{\mathrm{fin}}
+      = \{\,x\!\mapsto\!L_{x},\; y\!\mapsto\!L_{x}\,\},
+    \qquad
+    \sigma_{\mathrm{fin}}
+      = \{\,L_{x}\!\mapsto\!100,\; L_{y}\!\mapsto\!v^{0}_{y}\,\}
+  }
+\]
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 3 - Most General Unifier (MGU)                                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{MGU}{1}
+Calculate, if possible, the \textbf{Most General Unifier (MGU)} for the following atomic propositions. Write down every step (including the substitution).
+If there is no MGU, explain why.
+\begin{enumerate}
+
+    %1.1
+    \item \textbf{t = split(bld(s(0),nil),s(s(0)),S,G)} and \textbf{t' = split(bld(X,L),P,0,G)} 
+	\begin{table}[H]\small
+		\begin{tabularx}{\textwidth}{X | c | X} \hline
+            t = split(bld(s(0),nil),s(s(0)),S,G) & t' = split(bld(X,L),P,0,G) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{ X \mid s(0)\} } \\ \hline
+            t = split(bld(s(0),nil),s(s(0)),S,G) & t' = split(bld(s(0),L),P,0,G) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{ X \mid s(0), L \mid nil\} } \\ \hline
+            t = split(bld(s(0),nil),s(s(0)),S,G) & t' = split(bld(s(0),nil),P,0,G) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{ X \mid s(0), L \mid nil, P \mid s(s(0))\} } \\ \hline
+            t = split(bld(s(0),nil),s(s(0)),S,G) & t' = split(bld(s(0),nil),s(s(0)),0,G) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{ X \mid s(0), L \mid nil, P \mid s(s(0)), S \mid 0\} } \\ \hline
+            t = split(bld(s(0),nil),s(s(0)),S,G) & t' = split(bld(s(0),nil),s(s(0)),0,G) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{ X \mid s(0), L \mid nil, P \mid s(s(0)), S \mid 0, G \mid G\} } \\ \hline
+            \multicolumn{2}{c|}{\textbf{unified}} \\\hline
+		\end{tabularx}
+	\end{table}
+        
+    %1.2
+    \item \textbf{t = part(bld(s(s(0)),bld(s(0),nil)),s(0),X,Y)} and \textbf{t' = part(bld(A,B),P,C,bld(A,D))} 
+	\begin{table}[H]\small
+        \begin{tabularx}{\textwidth}{X | c | X} \hline
+                part(bld(s(s(0)),bld(s(0),nil)),s(0),X,Y)  &  part(bld(A,B),P,C,bld(A,D)) \\ \hline
+                \multicolumn{2}{c|}{ $\Theta$ = \{ A \mid s(s(0))\} } \\ \hline
+                part(bld(s(0)),bld(s(0),nil)),s(0),X,Y) & part(bld(s(s(0)),B),P,C,bld(A,D)) \\ \hline
+                \multicolumn{2}{c|}{ $\Theta$ = \{ A \mid s(s(0)), B \mid bld(s(0),nil)\}} \\ \hline
+                part(bld(s(0)),bld(s(0),nil)),s(0),X,Y) & part(bld(s(s(0)),bld(s(0),nil),P,C,bld(A,D)) \\ 
+                \hline
+                \multicolumn{2}{c|}{ $\Theta$ = \{ A \mid s(s(0)), B \mid bld(s(0),nil), P \mid s(0)\}} \\ \hline
+                part(bld(s(0)),bld(s(0),nil)),s(0),X,Y) & part(bld(s(s(0)),bld(s(0),nil),s(0),C,bld(A,D)) \\  \hline
+                \multicolumn{2}{c|}{ $\Theta$ = \{ A \mid s(s(0)), B \mid bld(s(0),nil), P \mid s(0), X \mid C\}} \\ \hline
+                part(bld(s(0)),bld(s(0),nil)),s(0),X,Y) & part(bld(s(s(0)),bld(s(0),nil),s(0),X,bld(A,D)) \\  \hline
+                \multicolumn{2}{c|}{ $\Theta$ = \{ A \mid s(s(0)), B \mid bld(s(0),nil), P \mid s(0), X \mid C, Y \mid bld(s(s(0)),D)\}} \\ \hline
+                part(bld(s(0)),bld(s(0),nil)),s(0),X,bld(s(s(0)),D) & part(bld(s(s(0)),bld(s(0),nil),s(0),X,bld(s(s(0)),D)) \\  \hline
+                \multicolumn{2}{c|}{\textbf{unified}} \\ \hline        
+        \end{tabularx}
+        \end{table}
+
+	%1.3
+	\item \textbf{t = bld(0,bld(s(0),Y))} and \textbf{t' = bld(X,bld(Y,bld(0,nil)))} 
+	
+    \begin{table}[H]\small
+        \begin{tabularx}{\textwidth}{X | c | X} \hline
+            t = bld(0,bld(s(0),Y))   & t' = bld(X,bld(Y,bld(0,nil))) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{X \mid 0\}}  \\ \hline
+            t = bld(0,bld(s(0),Y))   & t' = bld(0,bld(Y,bld(0,nil))) \\ \hline
+            \multicolumn{2}{c|}{ $\Theta$ = \{X \mid 0, Y \mid s(0)\}} \\ \hline
+            t = bld(0,bld(s(0), s(0))   & t' = bld(0,bld(s(0),bld(0,nil))) \\ \hline
+            \multicolumn{2}{c|}{\textbf{not unified} because  $s(0) \ne bld(0,nil)$} \\ \hline
+        \end{tabularx}
+    \end{table}
+
+	%1.4
+    \item \textbf{t = sum(X,A,s(X),B)} and \textbf{t' = sum(s(D),s(D),A,C)}
+	
+    \begin{table}[H]\small
+        \begin{tabularx}{\textwidth}{X | c | X} \hline
+            t = sum(X,A,s(X),B)  &  & t' = sum(s(D),s(D),A,C) \\ \hline
+            & $\Theta$ = \{ X \mid s(D) \} & \\ \hline
+            t = sum(s(D),A,s(s(D)),B)  &  & t' = sum(s(D),s(D),A,C) \\ \hline
+            & $\Theta$ = \{ X \mid s(D), A \mid s(D) \} & \\ \hline
+            t = sum(s(D),s(D),s(s(D)),B)  &  & t' = sum(s(D),s(D),A,C) \\ \hline
+            & \textbf{not unified} because $s(s(D) \ne s(D)$ \\\hline
+        \end{tabularx}
+    \end{table}
+
+    %1.5
+    \item \textbf{t = result(A,B,sum(A))} and \textbf{t' = result(0,s(0),sum(X,Y))}
+	
+    \begin{table}[H]\small
+        \begin{tabularx}{\textwidth}{X | c | X} \hline
+            t = result(A,B,sum(A))  &  & t' = result(0,s(0),sum(X,Y)) \\ \hline
+            & $\Theta$ = \{ A\mid 0\} & \\ \hline
+            t = result(0,B,sum(0))  &  & t' = result(0,s(0),sum(X,Y)) \\ \hline
+            & $\Theta$ = \{ A\mid 0, B \mid s(0)\} & \\ \hline
+            t = result(0,s(0),sum(0))  &  & t' = result(0,s(0),sum(X,Y)) \\ \hline
+            & \textbf{not unified} because $sum(0) \ne sum(X,Y)$ \\ \hline
+
+
+
+            
+        \end{tabularx}
+    \end{table}
+	
+\end{enumerate}
+
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 4 - LP with resolution                                                  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{LP - Tic-tac-toe}{1.5}
+For the well-known game Tic-tac-toe\footnote{\url{https://en.wikipedia.org/wiki/Tic-tac-toe}} we define
+the predicate \textbf{piece({\color{green}X}, {\color{blue}Y}, {\color{red}P})} which  states that a piece of player \textbf{\color{red}P} $\in \{ nought, cross\}$ is at position \textbf{X, Y} $\in (0..2)$. The coordinates \textbf{X} and \textbf{Y} are modeled using the \textit{successor} definition (e.g. 0, s(0)).
+\begin{enumerate}
+    \item Model the game state given in Table \ref{tab:game_state} using the \textbf{piece} predicate.
+    \item Define the predicate \textbf{win({\color{red}P})}, which is true if player \textbf{{\color{red}P}} won the game.
+    \item Use resolution to show that the predicate \textbf{win($nought$)} is true given the game state in \ref{tab:game_state}.
+\end{enumerate}
+\begin{table}[h]\large
+    \centering
+    \begin{tabular}{c|c|c}
+         o & x & x \\ \hline
+         o & o &   \\ \hline
+         o & x & x
+    \end{tabular}
+    \caption{Game state}
+    \label{tab:game_state}
+\end{table}
+
+\subsection*{Solution}
+
+\subsubsection{Model the game state using the \texttt{piece} predicate}
+
+\begin{itemize}
+    \item \texttt{piece(0, 0, nought).}
+    \item \texttt{piece(0, s(0), cross).}
+    \item \texttt{piece(0, s(s(0)), cross).}
+    \item \texttt{piece(s(0), 0, nought).}
+    \item \texttt{piece(s(0), s(0), nought).}
+    \item \texttt{piece(s(s(0)), 0, nought).}
+    \item \texttt{piece(s(s(0)), s(0), cross).}
+    \item \texttt{piece(s(s(0)), s(s(0)), cross).}
+\end{itemize}
+
+\subsubsection{Define the predicate \texttt{win(P)}}
+The predicate \texttt{win(P)} is true if player \texttt{P} has three pieces in straight line, like a row, a collumn or a diagnoal
+
+\textbf{Winning Rows:}
+\begin{itemize}
+    \item \texttt{win(P) :- piece(0, 0, P), piece(0, s(0), P), piece(0, s(s(0)), P).} 
+    \item \texttt{win(P) :- piece(s(0), 0, P), piece(s(0), s(0), P), piece(s(0), s(s(0)), P).} 
+    \item \texttt{win(P) :- piece(s(s(0)), 0, P), piece(s(s(0)), s(0), P), piece(s(s(0)), s(s(0)), P).}
+\end{itemize}
+
+\textbf{Winning Columns:}
+\begin{itemize}
+    \item \texttt{win(P) :- piece(0, 0, P), piece(s(0), 0, P), piece(s(s(0)), 0, P).} 
+    \item \texttt{win(P) :- piece(0, s(0), P), piece(s(0), s(0), P), piece(s(s(0)), s(0), P).} 
+    \item \texttt{win(P) :- piece(0, s(s(0)), P), piece(s(0), s(s(0)), P), piece(s(s(0)), s(s(0)), P).}
+\end{itemize}
+
+\textbf{Winning Diagonals:}
+\begin{itemize}
+    \item \texttt{win(P) :- piece(0, 0, P), piece(s(0), s(0), P), piece(s(s(0)), s(s(0)), P).}
+    \item \texttt{win(P) :- piece(0, s(s(0)), P), piece(s(0), s(0), P), piece(s(s(0)), 0, P).}
+\end{itemize}
+
+\subsubsection{Resolution}
+
+\textbf{Facts (F):}\\
+
+
+- F1:  \texttt{piece(0, 0, nought).}\\
+- F2:  \texttt{piece(0, s(0), cross).}\\
+- F3:  \texttt{piece(0, s(s(0)), cross).}\\
+- F4:  \texttt{piece(s(0), 0, nought).}\\
+- F5:  \texttt{piece(s(0), s(0), nought).}\\
+- F6:  \texttt{piece(s(s(0)), 0, nought).}\\
+- F7:  \texttt{piece(s(s(0)), s(0), cross).}\\
+- F8:  \texttt{piece(s(s(0)), s(s(0)), cross).}\\
+
+\textbf{Rules (converted to clauses, separate namespace for each rule):}\\
+
+
+- R1: \(\texttt{win}(P_1) \lor \lnot\texttt{piece}(0, 0, P_1) \lor \lnot\texttt{piece}(0, s(0), P_1) \lor \lnot\texttt{piece}(0, s(s(0)), P_1)\)\\
+- R2: \(\texttt{win}(P_2) \lor \lnot\texttt{piece}(s(0), 0, P_2) \lor \lnot\texttt{piece}(s(0), s(0), P_2) \lor \lnot\texttt{piece}(s(0), s(s(0)), P_2)\)\\
+- R3: \(\texttt{win}(P_3) \lor \lnot\texttt{piece}(s(s(0)), 0, P_3) \lor \lnot\texttt{piece}(s(s(0)), s(0), P_3) \lor \lnot\texttt{piece}(s(s(0)), s(s(0)), P_3)\)\\
+- R4: \(\texttt{win}(P_4) \lor \lnot\texttt{piece}(0, 0, P_4) \lor \lnot\texttt{piece}(s(0), 0, P_4) \lor \lnot\texttt{piece}(s(s(0)), 0, P_4)\)\\
+- R5: \(\texttt{win}(P_5) \lor \lnot\texttt{piece}(0, s(0), P_5) \lor \lnot\texttt{piece}(s(0), s(0), P_5) \lor \lnot\texttt{piece}(s(s(0)), s(0), P_5)\)\\
+- R6: \(\texttt{win}(P_6) \lor \lnot\texttt{piece}(0, s(s(0)), P_6) \lor \lnot\texttt{piece}(s(0), s(s(0)), P_6) \lor \lnot\texttt{piece}(s(s(0)), s(s(0)), P_6)\)\\
+- R7: \(\texttt{win}(P_7) \lor \lnot\texttt{piece}(0, 0, P_7) \lor \lnot\texttt{piece}(s(0), s(0), P_7) \lor \lnot\texttt{piece}(s(s(0)), s(s(0)), P_7)\)\\
+- R8: \(\texttt{win}(P_8) \lor \lnot\texttt{piece}(0, s(s(0)), P_8) \lor \lnot\texttt{piece}(s(0), s(0), P_8) \lor \lnot\texttt{piece}(s(s(0)), 0, P_8)\)\\
+
+    
+\textbf{Query (Q):}
+\begin{itemize}
+    \item \texttt{win(nought).}
+\end{itemize}
+
+\textbf{Negated Query (NQ):}
+\begin{itemize}
+    \item \texttt{$\lnot$win(nought).}
+\end{itemize}
+
+\textbf{Resolution Steps:}
+
+\textbf{Step 1:} Resolve NQ
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$win(nought).}
+    \item \textbf{R}(R4): \texttt{win(P\_4) $\lor \lnot$piece(0, 0, P\_4) $\lor \lnot$piece(s(0), 0, P\_4) $\lor \lnot$piece(s(s(0)), 0, P\_4).}
+    \item \textbf{$\Theta$:} \texttt{\{P\_4 | nought\}}
+    \item \textbf{Q$\Theta$:} \texttt{$\lnot$win(nought).}
+    \item \textbf{R$\Theta$:} \texttt{win(nought) $\lor \lnot$piece(0, 0, nought) $\lor \lnot$piece(s(0), 0, nought) $\lor \lnot$piece(s(s(0)), 0, nought).}
+    \item \textbf{Resolvent (C1):} \texttt{$\lnot$piece(0, 0, nought) $\lor \lnot$piece(s(0), 0, nought) $\lor \lnot$piece(s(s(0)), 0, nought).}
+\end{itemize}
+
+\textbf{Step 2:} Resolve C1
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$piece(0, 0, nought) $\lor \lnot$piece(s(0), 0, nought) $\lor \lnot$piece(s(s(0)), 0, nought).}
+    \item \textbf{R}(F1): \texttt{piece(0, 0, nought).}
+    \item \textbf{$\Theta$:} \texttt{\{\}}
+    \item \textbf{Resolvent (C2):} \texttt{$\lnot$piece(s(0), 0, nought) $\lor \lnot$piece(s(s(0)), 0, nought).}
+\end{itemize}
+
+\textbf{Step 3:} Resolve C2 
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$piece(s(0), 0, nought) $\lor \lnot$piece(s(s(0)), 0, nought).}
+    \item \textbf{R}(F4): \texttt{piece(s(0), 0, nought).}
+    \item \textbf{$\Theta$:} \texttt{\{\}}
+    \item \textbf{Resolvent (C3):} \texttt{$\lnot$piece(s(s(0)), 0, nought).}
+\end{itemize}
+
+\textbf{Step 4:} Resolve C3
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$piece(s(s(0)), 0, nought)}
+    \item \textbf{R}(F6): \texttt{piece(s(s(0)), 0, nought).}
+    \item \textbf{$\Theta$:} \texttt{\{\}}
+    \item \textbf{Resolvent:} \texttt{[]}. (Empty Clause)
+\end{itemize}
+
+The derivation of the empty clause proves that \texttt{win(nought)} is true.
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 5 - LP modelling incl. resolution                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{LP - Fibonacci sequence}{2.5}
+\begin{enumerate}
+\item Define the predicate \textbf{fib(X)}, which is true for all natural numbers contained in the fibonacci sequence\footnote{\url{https://en.wikipedia.org/wiki/Fibonacci_sequence}}. Use the \textit{successor} definition (e.g. s(0), s(s(s(0))) to represent natural numbers and the \textit{plus(X,Y,Z)} predicate discussed in the lecture.\\
+\textbf{Remark:} There are different definitions concerning the first two values of the fibonacci sequence. It is \textbf{mandatory} to use the definition with (1,1) as the first two values.\\
+\textbf{Hint:} You can define helper predicates as needed.
+
+\begin{verbatim}
+ (P1) plus(0,Y,Y).
+ (P2) plus(s(X), Y, s(Z)) := plus(X,Y,Z).
+\end{verbatim}
+\item Argue the trueness of the following query using resolution. Write down query, rule/fact and the substitution for every step.
+\begin{verbatim}
+ := fib(s(s(0))).
+\end{verbatim}
+\end{enumerate}
+
+\subsection*{Solution}
+
+\setcounter{subsubsection}{0}
+
+\subsubsection{Define the predicate \texttt{fib(X)}}
+The successor and the plus(X,Y,Z) predicate is taken from the lecture, so i wont define them here again.\\
+
+Before we define the predicate fib(X), first lets create a helper predicate "\text{fib\_next(X, Y)}" which is true when Y is the next Fibonacci number in sequence after X, which is also a Fibonacci number:\\
+
+\begin{itemize}
+\item \texttt{fib\_next(s(0), s(0)).} \\
+    This is the base case: the first two consecutive Fibonacci numbers are (1, 1).
+\item \texttt{fib\_next(X, Y) :- fib\_next(Z, X), plus(Z, X, Y).}  \\
+    This is a recursive rule. It checks that the X is a Fibonacci number (by being the next fibonacci number of another fibonacci number Z). Then it checks that Y is a valid next Fibonacci number, if it is sum of X and Z.
+\end{itemize}
+
+Now we can define the \texttt{fib(X)} predicate.
+
+\begin{itemize}
+    \item \texttt{fib(X) :- fib\_next(\_, X).}\\
+    Number `X` is a Fibonacci number if it appears in any of the fib\_next. However this won't work if X is the first fibonacci number s(0), so we also need the base case for fib(X)
+    
+    \item \texttt{fib(s(0)).} \\
+    This is the base case stating that the number 1 (\texttt{s(0)}) is a Fibonacci number
+    
+\end{itemize}
+
+\subsubsection{Argue the trueness of \texttt{:= fib(s(s(0)))} using resolution.}
+
+\textbf{Facts (F):}\\
+
+- F1: \texttt{fib\_next(s(0), s(0))}\\
+- F2: \texttt{fib(s(0))} \\
+
+\textbf{Rules (converted to clauses, separate namespace for each rule):}\\
+
+- R1: \texttt{plus(0, Y\_1, Y\_1).} (from VO)\\
+- R2: \texttt{plus(s(X\_2), Y\_2, s(Z\_2)) $\lor \lnot$plus(X\_2, Y\_2, Z\_2).} (from VO)\\
+- R3: \texttt{fib(X\_3) $\lor \lnot$fib\_next(A\_3, X\_3)}\\
+- R4: \texttt{fib\_next(X\_4, Y\_4) $\lor \lnot$fib\_next(Z\_4, X\_4) $\lor \lnot$plus(Z\_4, X\_4, Y\_4).}\\
+
+\textbf{Query (Q):}
+\begin{itemize}
+    \item \texttt{fib(s(s(0))).}
+\end{itemize}
+
+\textbf{Negated Query (NQ):}
+\begin{itemize}
+    \item \texttt{$\lnot$fib(s(s(0))).}
+\end{itemize}
+
+\subsubsection*{Resolution Steps:}
+
+\textbf{Step 1:} Resolve NQ
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$fib(s(s(0))).}
+    \item \textbf{R}(R3): \texttt{fib(X\_3) $\lor \lnot$fib\_next(A\_3, X\_3).}
+    \item \textbf{$\Theta$:} \texttt{\{X\_3 | s(s(0))\}}
+    \item \textbf{Q$\Theta$:}\texttt{$\lnot$fib(s(s(0))).}
+    \item \textbf{R$\Theta$:} \texttt{fib(s(s(0))) $\lor \lnot$fib\_next(A\_3, s(s(0))).}
+    \item \textbf{Resolvent (C1):} \texttt{$\lnot$fib\_next(A\_3, s(s(0))).}\\
+\end{itemize}
+
+
+\textbf{Step 2:} Resolve C1
+\begin{itemize}
+    \item \textbf{Q:} \( \lnot\,\texttt{fib\_next(A\_3, s(s(0)))} \)
+    \item \textbf{R(R4):} \( \texttt{fib\_next(X\_4, Y\_4)} \lor \lnot\,\texttt{fib\_next(Z\_4, X\_4)} \lor \lnot\,\texttt{plus(Z\_4, X\_4, Y\_4)} \)
+    \item \textbf{\(\Theta\):} \texttt{\{A\_3 | X\_4, Y\_4 | s(s(0))\}}
+    \item \textbf{Q$\Theta$:}\( \lnot\,\texttt{fib\_next(X\_4, s(s(0)))} \)
+    \item \textbf{R\(\Theta\):} \( \texttt{fib\_next(X\_4, s(s(0)))} \lor \lnot\,\texttt{fib\_next(Z\_4, X\_4)} \lor \lnot\,\texttt{plus(Z\_4, X\_4, s(s(0)))} \)
+    \item \textbf{Resolvent (C2):} \( \lnot\,\texttt{fib\_next(Z\_4, X\_4)} \lor \lnot\,\texttt{plus(Z\_4, X\_4, s(s(0)))} \)\\
+\end{itemize}
+
+
+\textbf{Step 3:} Resolve C2
+\begin{itemize}
+    \item \textbf{Q:} \( \lnot\,\texttt{fib\_next(Z\_4, X\_4)} \lor \lnot\,\texttt{plus(Z\_4, X\_4, s(s(0)))} \)
+    \item \textbf{R}(F1): \texttt{fib\_next(s(0), s(0)).}
+    \item \textbf{\(\Theta\):} \texttt{\{Z\_4 | s(0), X\_4 | s(0)\}}
+    \item \textbf{Q\(\Theta\):} \( \lnot\,\texttt{fib\_next(s(0), s(0))} \lor \lnot\,\texttt{plus(s(0), s(0), s(s(0)))} \)
+\item \textbf{R\(\Theta\):} \texttt{fib\_next(s(0), s(0)).}
+    \item \textbf{Resolvent (C3):} \( \lnot\,\texttt{plus(s(0), s(0), s(s(0)))} \)\\
+\end{itemize}
+
+
+\textbf{Step 4:} Resolve C3 
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$plus(s(0), s(0), s(s(0)))}
+    \item \textbf{R(R2):}  \texttt{plus(s(X\_2), Y\_2, s(Z\_2)) $\lor \lnot$plus(X\_2, Y\_2, Z\_2).}
+    \item \textbf{$\Theta$:} \texttt{\{X\_2 | 0, Y\_2 | s(0), Z\_2 | s(0)\}}
+    \item     \textbf{Q\(\Theta\):}  \texttt{$\lnot$plus(s(0), s(0), s(s(0)))}
+    \item \textbf{R$\Theta$:} \texttt{plus(s(0), s(0), s(s(0))) $\lor \lnot$plus(0, s(0), s(0)).}
+    \item \textbf{Resolvent (C4):} \texttt{$\lnot$plus(0, s(0), s(0)).}\\
+\end{itemize}
+
+\textbf{Step 5:} Resolve C4 
+\begin{itemize}
+    \item \textbf{Q:} \texttt{$\lnot$plus(0, s(0), s(0))}
+    \item \textbf{R}(R1): \texttt{plus(0, Y\_1, Y\_1).}
+    \item \textbf{$\Theta$:} \texttt{\{Y\_1 | s(0)\}}
+    \item     \textbf{Q\(\Theta\):}  \texttt{$\lnot$plus(0, s(0), s(0))}
+    \item \textbf{R$\Theta$:} \texttt{plus(0, s(0), s(0)).}
+    \item \textbf{Resolvent:} \texttt{[]}. (Empty Clause)\\
+\end{itemize}
+
+The successful derivation of the empty clause `[]` means  that our original query \texttt{fib(s(s(0)))} is true
+
+
+\pagebreak
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 6 - LP modelling with resolution, lists and backtracking                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{LP incl. Lists}{3}
+The predicate \textbf{bld(V, R)}, describes a list containing \textbf{Value V} and the \textbf{Tail R}. \textbf{Empty Lists} are represented by the \textbf{Constant nil}. Lists may contain any constant and are zero-indexed.
+
+\begin{enumerate}
+    \item (2 P.) The predicate \textbf{indexof({\color{green}V}, {\color{red}L}, {\color{blue}I})} should be true, if the list {\color{red}L} contains the constant {\color{green}V} at index {\color{blue}I}.
+
+    \begin{itemize}
+        \item Define all necessary rules for the predicate.
+        
+        \item Use resolution \textbf{with backtracking} to calculate \textbf{all possible values} for C. Label every step.
+        \begin{verbatim}
+        := indexof(a,bld(a,bld(b, bld(a, nil))), C)
+        \end{verbatim}
+    \end{itemize}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%% SOLUTION
+\textbf{Solution:}  \\
+
+
+The rules for $indexof$ are: \\
+(I1): $indexof(V, bld(V, X), 0).$ \\
+(I2): $indexof(V, bld(X, R), s(I)):- \hspace{0.2cm} indexof(V, R, I).$ \\
+
+The query is: \\
+$Q: \neg indexof(a, bld(a, bld(b, bld(a, nil))), C)$ \\
+
+\begin{enumerate}
+    \item $G: \neg indexof(a, bld(a, bld(b, bld(a, nil))), C)$ \\
+    $Step(A1), R(I1): indexof(V_1, bld(V_1, X_1), 0).$ \\
+    $\Theta_1 = \{V_1 | a, X_1 | bld(b, bld(a, nil)), C | 0\}$ \\
+    $Sub.G.: \neg indexof(a, bld(a, bld(b, bld(a, nil))), 0)$ \\
+    $Sub.R.: indexof(a, bld(a, bld(b, bld(a, nil))), 0)$    \\
+    $\Box$ \\
+    We derived $\Box$, thus a possible variable instantiation can be read from $\Theta_1$: $C = 0$.
+
+    \item Backtrack to find more solutions. \\
+    $G: \neg indexof(a, bld(a, bld(b, bld(a, nil))), C)$ \\
+    $Step(A2), R(I2): indexof(V_2, bld(X_2, R_2), s(I_2)) \lor \neg indexof(V_2, R_2, I_2).$ \\
+    $\Theta_2 = \{V_2 | a, X_2 | a, R_2 | bld(b, bld(a, nil)), C | s(I_2)\}$ \\
+    $Sub.G.: \neg indexof(a, bld(b, bld(a, nil)), I_2)$ \\
+    $Sub.R.: indexof(a, bld(a, bld(b, bld(a, nil))), s(I_2)) \lor \neg indexof(a, bld(b, bld(a, nil)), I_2)$
+
+    \item Now, we need to resolve $\neg indexof(a, bld(b, bld(a, nil)), I_2)$. \\
+    $G: \neg indexof(a, bld(b, bld(a, nil)), I_2)$ \\
+    $Step(B1), R(I2): indexof(V_3, bld(X_3, R_3), s(I_3))  \lor \neg indexof(V_3, R_3, I_3).$ \\
+    $\Theta_3 = \{V_3 | a, X_3 | b, R_3 | bld(a, nil), I_2 | s(I_3)\}$ \\
+    $Sub.G.: \neg indexof(a, bld(a, nil), I_3)$ \\
+    $Sub.R.: indexof(a, bld(b, bld(a, nil)), s(I_3)) \lor \neg indexof(a, bld(a, nil), I_3)$
+
+    \item Now, we need to resolve $\neg indexof(a, bld(a, nil), I_3)$. \\
+    $G: \neg indexof(a, bld(a, nil), I_3)$ \\
+    $Step(C1), R(I1): indexof(V_4, bld(V_4, X_4), 0).$ \\
+    $\Theta_4 = \{V_4 | a, X_4 | nil, I_3 | 0\}$ \\
+    $Sub.G.: \neg indexof(a, bld(a, nil), 0)$ \\
+    $Sub.R.: indexof(a, bld(a, nil), 0) $ \\
+    $\Box$ \\
+    \\
+    
+  \textbf{Note: }Applying Rule (I2) to $\neg indexof(V,R,I)$ with the substituted values, which yields  $\neg indexof(a,nil,I)$, would not work because the list nil is not of the form bld(X,R).
+    
+ $\rightarrow$ We derived $\Box$. A variable instantiation can be read from the composition of $\Theta_2$, $\Theta_3$, and $\Theta_4$: \\
+ $C\Theta_2\Theta_3\Theta_4 = s(I_2)\Theta_3\Theta_4 = s(s(I_3))\Theta_4 = s(s(0))$.
+
+\end{enumerate}
+
+Thus, the possible variable instantiations for $C$ are: \\
+$C=0$ \\
+$C=s(s(0))$
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Bonus Task - Modeling a complex system                                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\beispiel{Modeling in LP (Bonus)}{1-3}
+The Eurocity 164 (“Transalpin”) is a direct train connection between Graz and Zurich\footnote{\url{https://en.wikipedia.org/wiki/Transalpin}}. The train leaves Graz daily at 9:45AM and arrives in Zurich at 7:30PM, stopping at the following stops: \textbf{Graz Hbf. - Leoben Hbf. - Selzthal - Bischofshofen - Schwarzach St.Veit - Innsbruck - Feldkirch - Buchs SG - Zürich HB}.
+\paragraph{}
+In May 2025 there is the following (scheduled) coach sequence\footnote{A colored description of the given tables can be found here: \href{https://www.vagonweb.cz/razeni/vlak.php?zeme=\%C3\%96BB&kategorie=EC&cislo=164&nazev=Transalpin&rok=2025&lang=en}{\texttt{https://www.vagonweb.cz}}. Note that coach 302 should not be modeled.}:
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c} \small
+    Number & Name \\ \hline \hline
+        312 & $Bmz^{73}$  \\ \hline
+        311 & $WRmz^{73}$ \\ \hline
+        310 & $ADbmpsz^{73}$  \\ \hline
+        309 & $Apm$ \\ \hline
+        308 & $Bpm_{2090b}$  \\ \hline
+        307 & $Bpm_{2090b}$ \\ \hline
+        306 & $Bpm_{2090}$  \\ \hline
+        305 & $Bpm_{2090}$ \\ \hline
+        304 & $Bpm_{2090b}$  \\ \hline
+        303 & $Bmpz^{70}$ \\ \hline
+    \end{tabular}
+    \quad
+    \begin{tabular}{c|c|c|c|c|c|c}
+    \multirow{2}{*}{Coach Name} & \multirow{2}{*}{Class} & \multirow{2}{*}{Type} & \multicolumn{3}{c|}{Reservable Seats}\\ 
+    & & & Window& Middle &Hallway \\\hline \hline
+         $Bmz^{73}$  & second & compartment & 15 & 13 & 11 \\
+         $WRmz^{73}$& - & dining car & - & - & -\\
+         $ADbmpsz^{73}$& first & open-plan & 15 & - & 13\\
+         $Apm$& first & panorama car & 11,15 & - & 13\\
+         $Bpm_{2090b}$& second & open-plan & 15 & 17 & 11\\
+         $Bpm_{2090}$& second & open-plan & 11,15 & - & 17\\
+         $Bmpz^{70}$& second & open-plan & 11,15 & - & 17\\
+    \end{tabular}
+    \caption{Coach sequence and coach types}
+    \label{tab:my_label}
+\end{table}
+\paragraph{}
+On Friday, June 6, 2025, a large part of the train from Graz to Zürich is reserved. Only the following seats are available in the specified sections: 
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c}
+         Coach & Seat & Free (from-to) \\ \hline\hline
+         303 & 11 & Selzthal - Schwarzach St. Veit\\
+         303 & 17 & Graz - Zürich\\ 
+         304 & 17 & Innsbruck - Buchs SG\\
+         309 & 13 & Graz - Feldkirch\\ 
+         310 & 15 & Graz - Zürich\\ 
+         312 & 11 & Leoben - Bischofshofen\\
+    \end{tabular}
+    \caption{Free Seats}
+    \label{tab:my_label}
+\end{table}
+\paragraph{}
+Write a reservation system for EC 164 in \textbf{LP} that offers the following options:
+\begin{itemize}
+    \item Selection of class (first, second)
+    \item Selection of coach type (compartment, open-plan, panorama car)
+    \item Selection of seat type (window, middle, hallway)
+    \item Entry (station name)
+    \item Exit (station name)
+\end{itemize}
+Your system should return one available coach and seat number based on these parameters.
+\paragraph{Remarks:}
+\begin{itemize}
+    \item Only the aforementioned coaches, stations and seat numbers must be supported.
+    \item You can take the predicate \textit{different(X,Y)}, which is true for each pair at different stations, as given.
+    \item Your submission must be written in LP! You can prepare or check your concept by writing it in Prolog, but keep in mind that LP does not support several operators of Prolog (including \lstinline{\=}).
+    \item It is not required to do a resolution, but it should be possible in theory.
+    Rules like \newline\lstinline{connected(X,Y) := connected(Y,X)} create infinite recursions during resolution and are therefore not allowed.
+    \item Your model will be graded for correctness and extensibility (think about the effort to model another train with a different set of coaches). Try to describe the system with as few but precise rules and facts as possible. The reference solution contains $<60$ facts and rules.
+\end{itemize}
+\end{document}

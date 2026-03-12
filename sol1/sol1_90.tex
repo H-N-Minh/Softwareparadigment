@@ -1,0 +1,716 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage{amssymb, amsmath}
+\usepackage[T1]{fontenc} % For proper handling of double quotes
+\usepackage[utf8]{inputenc}
+\usepackage{ngerman}
+\usepackage{fancyhdr}
+\usepackage{fullpage}
+\pagestyle{fancy}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+\usepackage{url}
+\usepackage{makecell}
+\usepackage{wrapfig}
+\usepackage{subfigure}
+\usepackage{placeins}
+
+\usepackage{tikz}
+\usepackage{bm}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{code_style}{
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+}
+\lstset{style=code_style}
+
+\setlength{\headheight}{12.4pt}
+\setlength{\headsep}{1.5\headheight}
+
+\newcommand{\AssignmentNumber}{1}
+
+\author{}
+
+\date{} % Kein Datum angegeben
+\fancyfoot{} % Seitenzahl unten nicht anzeigen
+
+\lhead{Assignment \AssignmentNumber}
+
+\rhead{Page \thepage}
+
+\title{Softwareparadigms SS 2025, Assignment \AssignmentNumber}
+
+\begin{document}
+
+
+\newcommand{\seccounter}{\addtocounter{section}{1} \thesection}
+\newcommand{\beispiel}[2]{\subsection*{Task #1 \qquad \textnormal{($#2$ P.)}}}
+\newcommand{\terminal}[1]{\underline{\texttt{#1}}}
+\newcommand{\Grammar}[1]{\input{grammars/#1.tex}}
+\maketitle
+\thispagestyle{fancy}
+
+\newcounter{ale}
+\newcommand{\abc}{\item[\alph{ale})]\stepcounter{ale}}
+\newenvironment{liste}{\begin{itemize}}{\end{itemize}}
+\newcommand{\aliste}{\begin{liste} \setcounter{ale}{1}}
+\newcommand{\zliste}{\end{liste}}
+\newenvironment{abcliste}{\aliste}{\zliste}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\parindent 0pt
+
+Assignments are solved in teams of three persons. Groups remain the same for the whole term. You can find the group registration in the \href{https://tc.tugraz.at/main/course/view.php?id=2217}{TeachCenter}. \newline
+
+\textbf{Submission:}
+The solution has to be submitted via the SAI student git. Using the
+provided latex template is mandatory (No handwritten solutions!). Please check in the \LaTeX{} source
+\textbf{as well as} the compiled PDF. Both files have to follow the naming
+convention '\texttt{sol<assignment number>\_<group number>.<ext>}' (e.g. '\texttt{sol1\_23.tex}').
+
+\textbf{Deadline for Group-/GitLab-Registration: 19.03.2025, 23:59 Uhr} \\
+\textbf{Deadline Assignment 1: 02.04.2025, 17:00 Uhr} \\
+\vspace{0.5cm}
+
+\beispiel{\seccounter : GitLab - Registration}{0}
+Each group member is required to sign up to the SAI student git via the
+TUG SSO Login using the following link \textbf{before 19.03.2025}:
+\url{https://git-students.sai.tugraz.at}. The group repositories will be
+created after the group registration deadline. This is a prerequisite
+for handing in solutions.
+
+\vspace{0.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 2 - Grammars
+
+\beispiel{\seccounter : Grammars}{1.5}
+
+Define a the following languages as 4-tuple grammars. Make sure that the language is as restrictive as possible.
+
+\begin{abcliste}
+    \abc $L = \{\terminal{a}(\terminal{c}|\terminal{b})^{*} \terminal{c}^{n} \ | \ n > 0\}$
+    \abc $L = \{\terminal{x}^{m}(\terminal{a}\,\terminal{b}|\terminal{b}\,\terminal{a})^{n}\terminal{x} \ | \ n > 0,\ m > 1\}$
+    \abc $L = \{\terminal{a}^{2n+2} \terminal{b} \, \terminal{c}^{*}  (\terminal{b}\,\terminal{b}|\terminal{d})^{n}  \ | \ n > 0\}$
+\end{abcliste}
+
+\vspace{0.5cm}
+
+\newpage
+
+\textbf{a)}  \hspace{5.5cm} $L = \{\terminal{a}(\terminal{c}|\terminal{b})^{*} \terminal{c}^{n} \ | \ n > 0\}$
+
+\begin{align*}
+V_N &= \{ S, A, B\} \\
+V_T &= \{ \terminal{a}, \terminal{b}, \terminal{c} \} \\
+S  &= S
+\end{align*}
+
+\[
+\begin{array}{rl}
+& \Phi:     \\
+& \\
+S &\rightarrow \texttt{a}A \\
+A &\rightarrow \texttt{b}A \\
+A &\rightarrow \texttt{c}A \\
+A &\rightarrow B \\
+B &\rightarrow \texttt{c}B \\
+B &\rightarrow \texttt{c} \\
+\end{array}
+\]
+
+\vspace{2cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{b)}     \hspace{5.5cm} $L = \{\terminal{x}^{m}(\terminal{a}\,\terminal{b}|\terminal{b}\,\terminal{a})^{n}\terminal{x} \ | \ n > 0,\ m > 1\}$
+
+\begin{align*}
+V_N &= \{ S, A, B, C \} \\
+V_T &= \{ \terminal{a}, \terminal{b}, \terminal{x} \} \\
+S  &= S
+\end{align*}
+
+\[
+\begin{array}{rl}
+& \Phi:     \\
+& \\
+S &\rightarrow \texttt{x}\,\texttt{x}\,A \\
+A &\rightarrow \texttt{x}\,A \\
+A &\rightarrow B \\
+B &\rightarrow \texttt{a}\,\texttt{b}\,B \\
+B &\rightarrow \texttt{b}\,\texttt{a}\,B \\
+B &\rightarrow \texttt{a}\,\texttt{b}\,C \\
+B &\rightarrow \texttt{b}\,\texttt{a}\,C \\
+C &\rightarrow \texttt{x} \\
+\end{array}
+\]
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textbf{c)}     \hspace{5.5cm}  $L = \{\terminal{a}^{2n+2} \terminal{b} \, \terminal{c}^{*}  (\terminal{b}\,\terminal{b}|\terminal{d})^{n}  \ | \ n > 0\}$
+
+\begin{align*}
+V_N &= \{ S, A, B, C, D \} \\
+V_T &= \{ \terminal{a}, \terminal{b}, \terminal{c}, \terminal{d} \} \\
+S  &= S
+\end{align*}
+
+\[
+\begin{array}{rl}
+& \Phi:     \\
+S &\rightarrow \texttt{a}\,\texttt{a}\,A \\
+A &\rightarrow \texttt{a}\,\texttt{a}\,A \\
+A &\rightarrow B \\
+B &\rightarrow \texttt{b}\,C \\
+C &\rightarrow \texttt{c}\,C \\
+C &\rightarrow D \\
+D &\rightarrow \texttt{b}\,\texttt{b}\,D \\
+D &\rightarrow \texttt{d}\,D \\
+D &\rightarrow \texttt{b}\,\texttt{b} \\
+D &\rightarrow \texttt{d} \\
+\end{array}
+\]
+
+\vspace{3cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 3 - Chomsky hierarchy
+
+\beispiel{\seccounter : Chomsky hierarchy}{3}
+
+For each grammar, mark all grammar types it belongs to with a cross ``\texttt{X}''. 
+Explain why you made this decision and state the relevant production rule. \\[2ex]
+
+\begin{table}[ht!]
+\begin{tabular}{|c|l|l|l|l|l|l|}
+\hline
+    Grammars & $G$ & $G_{sens}$ & $G_{free}$ & $G_{reg}$ & rule & reason \\ \hline
+    
+    \Grammar{3-1} & X & X & -& -& $\terminal{int} \terminal{(} C \terminal{)} \rightarrow \terminal{float} \terminal{(} C \terminal{)}$ & 
+    \begin{tabular}[c]{@{}l@{}}
+    Not a context-free \\ grammar, because \\ terminals are not \\ allowed 
+    on \\ the left-hand \\ side. However, \\ the condition \\ $|\alpha| \leq |\beta|$ \\ 
+    is satisfied, \\ so the grammar \\ is context-sensitive.
+    \end{tabular} \\ \hline
+
+    
+    \Grammar{3-2} & X& X& x& -&
+    \shortstack{
+    $A \rightarrow \terminal{a} A \terminal{b}$ \\
+    $A \rightarrow B \terminal{c} \terminal{d}$} 
+    & \begin{tabular}[c]{@{}l@{}}
+    Not a regular \\ grammar, since this \\ requires that the \\ right-hand side \\ is of the form\\ $aA$, $a$, or $\varepsilon$, where \\$a \in V_T$, $A \in V_N$
+    \end{tabular} \\ \hline
+
+    
+    \Grammar{3-3} & - &- & -& -& 
+    $\terminal{x} \rightarrow \terminal{z}$
+    & \begin{tabular}[c]{@{}l@{}}
+    Invalid, because \\terminal
+    symbols \\may not stand alone \\on the
+    on the \\left-hand side.
+    $\alpha$ must \\have at least one\\
+    non-terminal symbol\\
+    must be included.
+    \end{tabular} \\ \hline
+
+
+    \Grammar{3-4} & X&X &X &X &- & 
+    \begin{tabular}[c]{@{}l@{}}
+    All conditions for \\ a regular grammar \\are satisfied, since the \\production rules 
+    are \\of the form \\ $X \rightarrow aA$, $X \rightarrow a$, \\or $X \rightarrow \varepsilon$,
+    where \\$X \in V_N$, $a \in V_T$, \\and $A \in V_N$.\end{tabular} \\ \hline
+
+    
+    \Grammar{3-5} &X& -&- &- &$\terminal{c} Y \rightarrow P$ &
+    \begin{tabular}[c]{@{}l@{}}Unrestricted, since \\context-sensitive \\grammar requires \\$|\alpha| \leq |\beta|$, where the \\cardinality describes \\the number of \\terminal and \\nonterminal symbols.\end{tabular} \\ \hline
+
+    
+    \Grammar{3-6} &X &X &X & -& $N \rightarrow E \terminal{;}$& 
+    \begin{tabular}[c]{@{}l@{}}
+    Not a regular \\ grammar, since this \\ requires that the \\ right-hand side \\ is of the form\\ $aA$, $a$, or $\varepsilon$, where \\$a \in V_T$, $A \in V_N$
+    \end{tabular} \\ \hline
+    \end{tabular}
+    
+\end{table}
+
+
+\FloatBarrier
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 4 - define a grammar
+
+\beispiel{\seccounter : Defining Grammars}{2}
+
+Write a grammar for defining simple Bash pipes. This is a simplified representation of a sequence of commands that are executed sequentially, with the output of one command passed as input to the next using the pipe operator \texttt{|}. Additionally, the grammar should support CmdLine execution using the logical AND and OR operators, \texttt{\&\&} and  \texttt{||} respectively. Here is an example:
+
+
+\begin{lstlisting}
+    ls -l | grep "txt" | wc -l && echo "Success :)" || echo "Failed :("
+\end{lstlisting}
+
+The following points should be considered for the grammar definition:
+\begin{itemize}
+    \item A word of the language starts with a command.
+    \item Commands can be connected using the pipe operator \terminal{|}. The output of the command on the left of the pipe is passed as input to the command on the right. There can be any number of commands connected by pipes.
+    \item After a command or a sequence of piped commands, CmdLine execution can be specified using the logical AND (\terminal{\&\&}) or OR (\terminal{||}) operators.
+    \begin{itemize}
+        \item The operator \terminal{\&\&} executes the command on its right only if the command on its left succeeds.
+        \item The operator \terminal{||} executes the command on its right only if the command on its left fails.
+        \item CmdLine execution can be chained. For example, \texttt{command1 \&\& command2 || command3} means that \texttt{command2} will be executed if \texttt{command1} succeeds, and \texttt{command3} will be executed if either \texttt{command1} fails or \texttt{command2} fails.
+        \item There must not be another pipe (\terminal{|}) after any CmdLine.
+    \end{itemize}
+    \item The grammar should support the following commands: \terminal{ls}, \terminal{grep}, \terminal{wc}, \terminal{echo}, and \terminal{cat}. These commands can be used in any combination within the pipeline. Depending on the command, commands may or must be followed by arguments (e.g. \terminal{wc} \terminal{-l}). The following restrictions on arguments hold:
+    \begin{itemize}
+        \item The \terminal{ls} command can have any number of arguments, each being either \terminal{-l} or a directory path.
+        \item The \terminal{grep} command must have exactly one argument which is \terminal{\textquotedbl txt\textquotedbl}. 
+        \item The \terminal{wc} command may have \terminal{-l} as an argument.
+        \item The \terminal{echo} command may have \terminal{\textquotedbl Success :)\textquotedbl} or \terminal{\textquotedbl Failed :(\textquotedbl} as an argument, never both.
+        \item The \terminal{cat} command requires a positive number of file paths as arguments.
+    \end{itemize}
+\item Paths:
+    \begin{itemize}
+        \item A directory path is an alternating sequence of directories and \terminal{/} terminals, ending with \terminal{/}.
+        \item A directory consists of at least one character. Characters are represented by the terminal \terminal{char}.
+        \item A file path is either a directory path followed by a file or just a file.
+        \item A file consists of at least one character and optionally a \terminal{.} terminal.
+    \end{itemize}
+    \item The grammar should allow for any combination of these commands, connected by pipes and CmdLine operators, to form a valid pipeline.
+\end{itemize}
+
+\vspace{0.2cm}
+Complete the following tasks:
+\begin{abcliste}  
+    \abc Define the grammar $G_{\text{Bash}}$ formally as a context-free grammar. Avoid left recursion and common prefixes on identical left-hand sides.
+    \abc Can this grammar also be represented as a regular grammar? Justify your answer.
+\end{abcliste}  
+
+\newpage
+
+
+\subsubsection{Solution }
+\begin{abcliste}
+    
+\abc Define context-free grammar
+
+Definition:  \( G_{\text{Bash}} = (V_N, V_T, S, \Phi) \) where: 
+\begin{equation*}
+V_T \;=\;
+\{
+\,\texttt{ls},\,
+\texttt{grep},\,
+\texttt{wc},\,
+\texttt{echo},\,
+\texttt{cat},\,
+\texttt{txt},\,
+\texttt{-l},\,
+\texttt{'Success :)'},\,
+\texttt{'Failed :('},\,
+\texttt{|},\,
+\texttt{\&\&},\,
+\texttt{||},\,
+\texttt{/},\,
+\texttt{char},\,
+\texttt{\_}\,
+\}.
+\end{equation*}
+\begin{equation}
+    \begin{split}
+    V_N = \{\, 
+    &\texttt{S},\ \texttt{Pipeline},\ \texttt{PipContent}, \ \texttt{CmdLine}, \ \texttt{CmdLineContent}  \texttt{Commands},\ \texttt{LS}, \texttt{GREP}, \ \texttt{WC}, \ \texttt{ECHO}, \\& \texttt{CAT}  ,  \ \texttt{CondOperator},  \texttt{LSArg},\ \texttt{LSArgs},\ \texttt{WCArgs},\ \texttt{ECHOArgs},\ \texttt{CATArgs},
+    \texttt{DirPath},\\& \texttt{Directory},\ \texttt{DirContent},\ \texttt{DirSlash},\ \texttt{FilePath},\ \texttt{File},\ \texttt{FileContent},\ \texttt{OptionalChar}
+    \,\}
+    \end{split}
+    \end{equation}
+\newpage
+\begin{equation*}
+S = \text{CmdLine}
+\end{equation*}
+
+\begin{equation*}
+\Phi :
+\end{equation*}
+
+\begin{eqnarray*}
+\text{CmdLine} &\rightarrow& \text{Pipeline} \ \text{CmdLineContent} \\
+\text{CmdLineContent} &\rightarrow& \text{CondOperator} \ \text{Pipeline} \ \text{CmdLineContent} \mid \epsilon \\
+\text{CondOperator} &\rightarrow& \texttt{\&\&} \mid \texttt{||} \\
+\\
+\text{Pipeline} &\rightarrow& \text{Commands} \ \text{PipContent} \\
+\text{PipContent} &\rightarrow& \epsilon \mid \text{'|'} \ \text{Commands} \ \text{PipContent} \\
+\\
+\text{Commands} &\rightarrow& \text{LS} \mid \text{GREP} \mid \text{WC} \mid \text{ECHO} \mid \text{CAT} \\
+\\
+\text{LS} &\rightarrow&  \texttt{ls} \ \text{LSArgs} \\
+\text{LSArgs} &\rightarrow& \epsilon \mid \text{LSArg} \ \text{LSArgs} \\
+\text{LSArg} &\rightarrow& \texttt{-l} \mid \text{DirPath} \\
+\\
+\text{GREP} &\rightarrow& \texttt{grep} \ \texttt{txt} \\
+\\
+\text{WC} &\rightarrow& \texttt{wc} \ \text{WCArgs} \\
+\text{WCArgs} &\rightarrow& \epsilon \mid \texttt{-l} \\
+\\
+\text{ECHO} &\rightarrow& \texttt{echo} \ \text{ECHOArgs} \\
+\text{ECHOArgs} &\rightarrow & \epsilon \mid \texttt{''Success :)''} \mid \texttt{''Failed :(''} \\
+\\
+\text{CAT} &\rightarrow& \texttt{cat} \ \text{CATArgs} \\
+\text{CATArgs} &\rightarrow& \text{FilePath} \mid \text{FilePath} \ \text{CATArgs} \\
+\\
+\text{FilePath} &\rightarrow& \text{DirPath} \ \text{File} \mid \text{File} \\
+\text{DirPath} &\rightarrow& \text{DirSlash} \ \text{Directory} \mid \text{DirSlash} \ \text{Directory} \ \text{DirPath} \\
+\text{DirSlash} &\rightarrow& \texttt{/} \\
+\text{Directory} &\rightarrow& \texttt{char} \ \text{DirContent} \\
+\text{DirContent} &\rightarrow& \epsilon \mid \texttt{char} \ \text{DirContent} \\
+\\
+\text{File} &\rightarrow& \texttt{char} \ \text{FileContent} \\
+\text{FileContent} &\rightarrow& \epsilon \mid \texttt{char} \ \text{FileContent} \mid \texttt{OptionalChar} \ \text{FileContent}\\
+\text{OptionalChar} &\rightarrow& \texttt{\_}
+\end{eqnarray*}
+
+
+\abc Can grammar be represented as a regular grammar? \\
+Yes, it can be represented by a regular grammar. A regular grammar has productions of the form:  
+\[ X \rightarrow aY, \ X \rightarrow a \ or \ X \rightarrow \epsilon,\] where we can see that a terminal is followed by non-terminal and optionally terminal. Our Bash‐style language—consisting of commands, flags, and operators, can be handled by a finite automaton. Because a finite automaton suffices, it follows that the language is regular.
+
+
+Regular Grammar representation:
+
+\begin{equation*}
+V_T \;=\;
+\{
+\,\texttt{ls},\,
+\texttt{grep},\,
+\texttt{wc},\,
+\texttt{echo},\,
+\texttt{cat},\,
+\texttt{txt},\,
+\texttt{-l},\,
+\texttt{'Success :)'},\,
+\texttt{'Failed :('},\,
+\texttt{|},\,
+\texttt{\&\&},\,
+\texttt{||},\,
+\texttt{/},\,
+\texttt{char},\,
+\texttt{\_}\,
+\}.
+\end{equation*}
+
+\begin{equation*}
+V_N \;=\;
+\{
+\,S,\,
+R,\,
+P,\,
+P',\,
+C,\,
+\text{LsCmd},\,
+\text{LsState},\,
+\text{DirSt},\,
+\text{EndDir},\,
+\text{GrepCmd},\,
+G_1,\,
+\text{WcCmd},\,
+W,\,
+\text{EchoCmd},\,
+E,\,
+\text{CatCmd},\,
+\text{CatSt},\,
+\text{CatTail},\,
+\text{FileSt},\,
+\text{DirSt2},\,
+\text{EndDir2},\,
+\text{BaseSt}
+\}.
+\end{equation*}
+
+\begin{eqnarray*}
+S &\rightarrow& P \ R \\
+R &\rightarrow& \texttt{\&\&}\ P\ R \;\mid\; \texttt{||}\ P\ R \;\mid\; \epsilon \\
+P &\rightarrow& C \ P' \\
+P' &\rightarrow& \texttt{'|'}\ C \ P' \;\mid\; \epsilon \\
+C &\rightarrow& \text{LsCmd} \;\mid\; \text{GrepCmd} \;\mid\; \text{WcCmd} \;\mid\; \text{EchoCmd} \;\mid\; \text{CatCmd} \\[5pt]
+\text{LsCmd} &\rightarrow& \texttt{ls}\ \text{LsState} \\
+\text{LsState} &\rightarrow& \texttt{-l}\ \text{LsState} \;\mid\; \texttt{/}\ \text{DirSt} \;\mid\; \epsilon \\
+\text{DirSt} &\rightarrow& \texttt{char}\ \text{DirSt} \;\mid\; \texttt{\_}\ \text{DirSt} \;\mid\; \texttt{/}\ \text{DirSt} \;\mid\; \text{EndDir} \\
+\text{EndDir} &\rightarrow& \text{LsState} \\[5pt]
+\text{GrepCmd} &\rightarrow& \texttt{grep}\ G_1 \\
+G_1 &\rightarrow& \texttt{txt} \\[5pt]
+\text{WcCmd} &\rightarrow& \texttt{wc}\ W \\
+W &\rightarrow& \texttt{-l} \;\mid\; \epsilon \\[5pt]
+\text{EchoCmd} &\rightarrow& \texttt{echo}\ E \\
+E &\rightarrow& \texttt{'Success :)'} \;\mid\; \texttt{'Failed :('} \;\mid\; \epsilon \\
+\text{CatCmd} &\rightarrow& \texttt{cat}\ \text{CatSt} \\
+\text{CatSt} &\rightarrow& \text{FileSt}\ \text{CatTail} \\
+\text{CatTail} &\rightarrow& \text{FileSt}\ \text{CatTail} \;\mid\; \epsilon \\
+\text{FileSt} &\rightarrow& \texttt{/}\ \text{DirSt2} \;\mid\; \text{BaseSt} \\
+\text{DirSt2} &\rightarrow& \texttt{char}\ \text{DirSt2} \;\mid\; \texttt{\_}\ \text{DirSt2} \;\mid\; \texttt{/}\ \text{DirSt2} \;\mid\; \text{EndDir2} \\
+\text{EndDir2} &\rightarrow& \text{BaseSt} \\
+\text{BaseSt} &\rightarrow& \texttt{char}\ \text{BaseSt} \;\mid\; \texttt{\_}\ \text{BaseSt} \;\mid\; \epsilon
+\end{eqnarray*}
+
+As we can see the main difference between context free grammar and regular grammar is that each production rule in regular grammar has exactly one terminal, followed by at the most one non-terminal or no terminal at all. Meanwhile, in a context‐free grammar, a single production can include multiple terminals and multiple non-terminals in any order, allowing more complex patterns such as nesting.
+
+\end{abcliste}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 5 - Rewriting grammars & Parse-Trees
+
+\beispiel{\seccounter: Rewriting Grammars \& Parse-Trees}{2}
+
+Given is the grammar $G_{zig}$, which describes the pattern matching in Zig in a simplified way.
+
+\Grammar{5-1}
+
+\begin{abcliste}
+    \abc Why is the given grammar not suitable for efficient top-down parsing? Which rules are the reason for that?
+    \abc Rewrite the grammar $G_{zig}$ in a way, that it's suitable for efficient Top-Down Parsing. The new language $L(G_{zig_1})$ should be equivalent to the original language $L(G_{zig})$. Make sure that the number of production rules is as large as necessary and as small as possible.
+    \abc Create a Parse-Tree for the following word of the language $L(G_{zig_1})$:
+    \begin{align*}
+        \terminal{switch} &\terminal{(}\terminal{x}\terminal{)} \terminal{\{} \\
+        &\terminal{1}\terminal{,}\terminal{2} \ \terminal{=>} \ \terminal{calculate(x)} \terminal{,} \\
+        &\terminal{else} \ \terminal{=>} \ \terminal{@compileError(\textquotedbl Invalid\textquotedbl )} \terminal{,} \\
+    \terminal{\}}\terminal{;} \\
+    \end{align*}
+    Use your transformed grammar $G_{zig_1}$.
+\end{abcliste}
+
+% \input{task\_5} 
+% task_5.tex
+\subsection{Solution:}
+
+\subsubsection{a)}
+Top down parsing often runs into 2 problems, which are both present in the given grammar:
+
+\quad\quad\underline{1. Left Recursion causing infinite loop:}\\
+   1 of the productions for \( E \) is:
+     \[
+     E \rightarrow E , Z 
+     \]
+   This is left recursion because the right hand side (production) starts with the same symbol as the left hand side. In top down parsing, the parser would call the same procedure repeatedly without consuming any input, esentially causing infinite loop. \\
+
+\quad\quad\underline{2. Identical prefixes:}\\
+    Some of the productions of A, C and of D have identical prefixes, namely:
+     \[
+     \begin{align*}
+     A &\rightarrow  \quad (x) B \quad  \mid \quad  (y) B \\
+     C &\rightarrow  \quad 
+     D \Rightarrow \text{calculate}(T) , C \quad  |  \quad 
+     D \Rightarrow T , C \quad  |  \quad 
+     D \Rightarrow Z , C \quad  | \quad 
+     D \Rightarrow @\text{compileError("Invalid")} , C \\
+     D &\rightarrow  \quad 
+     Z \quad  |  \quad 
+     Z...Z \quad  |  \quad 
+     Z,E
+     \end{align*}
+     \]
+ For these A productions, they all have the same prefix '(' and postfix ')B'. For C productions, prefix 'D $\Rightarrow $ ' and postfix ',C'. For D production is the prefix 'Z'.\\ 
+ If the lookahead symbol is 1 digit, the parser cannot decide which production to apply without additional lookahead, since it has to look past the prefix to know which production to choose.
+
+\subsubsection{b)}
+First lets remove the left recursion by introducing a new nonterminal \( E' \) to handle the recursive part
+\begin{align*}
+    E &\rightarrow Z E' \\
+    E' &\rightarrow , Z E' \mid \epsilon
+\end{align*}
+Now lets handle problem with same prefix in production of C, this is done by grouping all parts that are not the prefix into a new nonterminal \( C' \). Also, since most of them also ends with the same letters ',C', we can exclude this from  \( C' \) :
+    \[
+    C \rightarrow \quad D \Rightarrow C' , C \quad \mid \quad \epsilon
+    \]
+    \[
+    C' \rightarrow \quad \text{calculate}(T) \quad  \mid \quad  T \quad \mid \quad  Z \quad \mid \quad @\text{compileError("Invalid")}
+    \]
+Same principle for A: \\
+    \[
+    A \rightarrow ( A')B
+    \]
+        \[
+    A' \rightarrow x \mid y
+    \]
+But this already exists as T, so we can just use that.\\
+    
+Finally lets handle prefix for D, same principle as above:
+    \[
+    D \rightarrow \quad \text{else} \quad  \mid  \quad Z D'
+    \]
+    \[
+    D' \rightarrow \quad  ...Z \quad  \mid \quad  , E \quad \mid \quad  \epsilon
+    \]
+  
+  
+The complete transformed grammar \( G_{\text{zig1}} \) is:
+
+\[
+\begin{align*}
+V_N &= \{S, A, B, C, C', D, D', E, E', T, Z\} \\
+V_T &= \{\text{switch}, x, y, 0, 1, 2, 3, (, ), \{, \}, \Rightarrow, ,, ..., \text{calculate}, ;, \text{else}, @\text{compileError("Invalid")}\} \\
+S &= S \\
+\Phi &: \\
+S &\rightarrow \text{switch } A \\
+A &\rightarrow ( T)B \\
+B &\rightarrow \{ C \}; \\
+C &\rightarrow D \Rightarrow C' , C \mid \epsilon \\
+C' &\rightarrow \text{calculate}(T) \mid T \mid Z \mid @\text{compileError("Invalid")} \\
+D &\rightarrow \text{else} \mid Z D' \\
+D' &\rightarrow ...Z \mid , E \mid \epsilon \\
+E &\rightarrow  ZE' \\
+E'&\rightarrow  ,ZE' \mid  \epsilon \\
+T &\rightarrow x \mid y \\
+Z &\rightarrow 0 \mid 1 \mid 2 \mid 3
+\end{align*}
+\]
+
+Now thats efficient!
+
+\subsubsection{c)}
+% -------------------------------------------------
+% Task zur Definition von Parse-Trees in Latex:
+% \begin{center}
+%     \begin{tikzpicture}
+%     \node {N} [sibling distance = 2cm]
+%         child {node {\terminal{c}}}
+%         child {node {A}
+%             child {node {\terminal{c}}}
+%             child {node {A}
+%                 child {node {\terminal{b}}}
+%                 child {node {\terminal{a}}}}}
+%         child {node {\terminal{a}}}
+%         child {node {B}
+%           child {node {\terminal{d}}}
+%           child {node {\terminal{d}}}  
+%           child {node {$B_1$}
+%             child {node{\terminal{c}}}
+%             child {node {$B_1$}
+%                 child {node{$\epsilon$}}}}};               
+%     \end{tikzpicture}
+% \end{center}
+% -------------------------------------------------
+
+\begin{center}
+    \begin{tikzpicture}[sibling distance=2cm, level distance=1.5cm]
+    \node {S}
+        child {node {\terminal{switch}}}
+        child {node {A}
+            child {node {\terminal{(}}}
+            child {node {T}
+                child {node {\terminal{x}}}
+            }
+            child {node {\terminal{)}}}
+            child {node {B}
+                child {node {\terminal{\{}}}
+                child {node {C}
+% 1, 2
+                    child {node {D} [sibling distance=1cm]
+                        child {node {Z}
+                            child {node {\terminal{1}}}
+                        }
+                        child {node {D'}
+                            child {node {\terminal{,}}}
+                            child {node {E}
+                                child {node {Z}
+                                    child {node {\terminal{2}}}
+                                }
+                                child {node {E'}
+                                    child {node {\(\epsilon\)}}
+                                }
+                            }
+                        }
+                    }
+                    child {node {\terminal{\(\Rightarrow\)}}}
+      % calculate(x),
+                    child {node {C'} [sibling distance=1cm]
+                        child {node {\terminal{calculate}}}
+                        child {node {\terminal{(}}}
+                        child {node {T}
+                            child {node {\terminal{x}}}
+                        }
+                        child {node {\terminal{)}}}
+                    }
+        % done
+                    child {node {\terminal{,}}}
+                    child {node {C} [sibling distance=1.4cm, level distance=3cm]
+                        child {node {D}
+                            child {node {\terminal{else}}}
+                        }
+                        child {node {\terminal{\(\Rightarrow\)}}}
+        % @compileError("invalid")
+                        child {node {C'}
+                            child {node {\terminal{@compileError('Invalid')}}}
+                        }
+                        child {node {\terminal{,}}}
+                        child {node {C}
+                            child {node {\(\epsilon\)}}
+                        }
+                    }
+                }
+                child {node {\terminal{\}}}}
+                child {node {\terminal{;}}}
+            }
+        };
+    \end{tikzpicture}
+\end{center}
+
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Task 6 - Recursive-Descent Parser
+
+\beispiel{\seccounter: Recursive-Descent Parser}{1.5}
+
+Given the following grammar: $G_6$ = \Grammar{6}
+
+\begin{itemize}
+    \item Define a recursive-decent parser for the language $L(G_\thesection)$. 
+    \item You are may apply grammar transformations to make the parsing easier.
+    \item Use one of the following programming languages: Python3, Scala, Clojure, Rust, C/C++, Zig or Lean3.
+    \item The programm is called via \texttt{./task6.<ext> <word>}
+    \item If the word \textbf{is} in the language, the output of the program must be: \textquotedbl\texttt{True}\textquotedbl.
+    \item If the word \textbf{is not} in the language, the output of the program must be: \textquotedbl\texttt{False}\textquotedbl.
+    \item There must not be any other output by the program.
+\end{itemize}
+\vspace{1cm}
+
+\textbf{Good luck!}
+
+\subsection{Solution:}
+
+The given grammar has similar problems as in task 5, including left recursion loop and identical prefixes. Here is the improved grammar version:
+
+\begin{align*}
+V_N &= \{S, A, B, F, U,U', X, Y, Z\} \\
+V_T &= \{a, d, e, f, n, x, z\} \\
+S &= S \\
+\Phi &: \\
+S &\rightarrow a A X a B \\
+A &\rightarrow a A  \mid   \epsilon \\
+X &\rightarrow e X  \mid \epsilon \\
+B &\rightarrow z U Z \\
+U &\rightarrow \epsilon \mid z U' \\
+U' &\rightarrow \epsilon \mid a \\
+Z &\rightarrow F X Y end \\
+F &\rightarrow f \mid \epsilon \\
+Y &\rightarrow x Y \mid \epsilon
+\end{align*}
+The implemented code mostly use LL(1) parser, but this is not enough in some cases, such as:\\
+- In $ S  \rightarrow a A X a B  $ part, X can be empty, leading to A to consume all 'a' and leaves no 'a' for later, causing the parser to wrongly reject a valid word like 'aazend'. \\
+- In $Z \rightarrow F X Y end$ part, Y can be empty, leading to X to oversume all 'e', same error as above.\\
+In these 2 cases, our parser becomes LL(2) to prevent these errors.
+
+
+\end{document} 

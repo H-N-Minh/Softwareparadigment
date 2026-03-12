@@ -1,0 +1,321 @@
+\documentclass[10pt, a4paper]{article}
+
+%%%%%%%%%%%%%% CONFIG %%%%%%%%%%%%%%%
+%\usepackage[ngerman]{babel}
+%\usepackage[english]{babel}
+\newcommand{\GroupNumber}{90} 
+\newcommand{\AssignmentNumber}{2}
+\newcommand{\Semester}{SS 2025}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amssymb, amsmath, amsthm}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage[parfill]{parskip}
+\usepackage{fullpage}
+\usepackage[outline]{contour}
+\usepackage{ulem}
+\usepackage{listings}
+
+
+
+\pagestyle{fancy}
+\setlength{\headheight}{12.4pt}
+\setlength{\headsep}{1.5\headheight}
+\fancypagestyle{plain}{
+  \fancyfoot{}
+  \lhead{Assignment \AssignmentNumber}
+  \rhead{Page \thepage}
+}
+\normalem
+
+\author{Khaled Elnaggar 12033937,\\ Ilma Bajramovic, \\Nhat Minh Hoang 12029170}
+\date{}
+\title{
+  Softwareparadigmen \Semester,
+  Übungsblatt \AssignmentNumber \\
+  Gruppe \GroupNumber
+}
+
+\newcounter{bsp}
+\setcounter{bsp}{0}
+\newcommand{\task}{\stepcounter{bsp}\subsection*{Beispiel \arabic{bsp}}}
+\newcommand{\subtask}[2]{\textbf{#1} #2}
+
+\newcommand{\ul}[1]{%
+  \begingroup%
+  \renewcommand{\ULdepth}{2.1pt}%
+  \contourlength{0.35pt}%
+  \uline{\phantom{#1}}\llap{\contour{white}{#1}}%
+  \endgroup%
+}
+\newcommand{\Prog}[1]{\texttt{\ul{#1}}}
+
+\newcommand{\Interp}[2][]{I(\delta,\omega#1,\Prog{#2})}
+\newcommand{\ValueOf}[2][]{\omega#1(\Prog{#2})}
+\newcommand{\equMod}[2]{\omega#1' \sim_{#2} \omega#1}
+\newcommand{\equModAss}[2]{\equMod{#1}{#2}, \omega#1'(\texttt{#2}) = }
+
+\newcommand{\quantorOmega}[2]{\ \omega#1',\ \equMod{#1}{#2}:\ }
+
+\newcommand{\ifThen}[1]{\Prog{if\ #1\ then}\\}
+\newcommand{\elseThen}{\Prog{else}\\}
+\newcommand{\elseIfThen}[1]{\Prog{else\ if\ #1\ then}\\}
+\newcommand{\ifThenElse}[3]{\Prog{if #1 then } #2 \Prog{ else } #3}
+
+\newcommand{\caseIf}[2]{#1 & \text{if } #2 \\}
+\newcommand{\caseElseIf}[2]{#1 & \text{else if } #2 \\}
+\newcommand{\caseElse}[1]{#1 & \text{otherwise}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%#
+
+\begin{document}
+\pagestyle{plain}
+\maketitle
+
+\task
+\textbf{1)}Below is the implementation of the function \Prog{implies(a,b)}.
+\begin{align*}
+  \ & \delta\Prog{implies(a,b)} = \\
+ 1\ & \quad \ifThen{isFalse?(a)} 
+ 2\ & \quad \quad \Prog{T} \\
+ 3\ & \quad \elseThen 
+ 4\ & \quad \quad \Prog{b}
+\end{align*}
+
+The interpretation of \Prog{{implies(a,b)}} under the given environment $\omega$ and $\delta$ proceeds as follows.
+
+\begin{align*}
+\ &  I(\delta, \omega, \Prog{implies(a,b)}) \\
+\ &= I(\delta, \omega^1, \Prog{if isFalse?(a) then } li_2 \Prog{ else } li_4) \\
+\ &\quad \text{with } \omega^1: \\
+\ &\quad \omega1(\Prog{a}) = I(\delta, \omega, \Prog{a}) = \omega(\Prog{a}) = T \\
+\ &\quad \omega1(\Prog{b}) = I(\delta, \omega, \Prog{b}) = \omega(\Prog{b}) = T \\
+\ &= I(\delta, \omega1, \Prog{b}) \\
+\ &\quad \text{since } I(\delta, \omega^1, \Prog{isFalse(a)}) = \text{F} \\
+\ &= \omega1(\Prog{b}) \\
+\ &= T
+\end{align*}
+
+\textbf{2)} Below is the implementation of the function \Prog{any(l)}.
+\begin{align*}
+  \ & \delta\Prog{any(l)} = \\
+ 1\ & \quad \ifThen{empty?(l)} 
+ 2\ & \quad \quad \Prog{F} \\
+ 3\ & \quad \elseThen 
+ 4\ & \quad \quad \Prog{or(first(l), any(rest(l)))}
+\end{align*}
+
+The interpretation of \Prog{any(l)} under the given environment $\omega$ and $\delta$ proceeds as follows:
+
+\begin{align*}
+\ & I(\delta, \omega, \Prog{any}(l)) \\
+\ &= I(\delta, \omega^1, \Prog{if empty?(l)} \Prog{ then } la_2 \Prog{ else } la_4) \\
+\ &\quad \textit{with } \omega^1: \\
+\ &\quad \omega1(\Prog{l}) = I(\delta, \omega, \Prog{l}) = \omega(\Prog{l}) = [\text{F}, \text{T}] \\
+\ &= I(\delta, \omega1, \Prog{or(first(l),} \Prog{any(rest(l)}))) \\
+\ &\quad \textit{since } I(\delta, \omega1, \Prog{empty(l)}) = \text{F} \\
+\ &= \textit{or}(I(\delta, \omega1, \Prog{first(l)}), I(\delta, \omega1, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}(I(\delta, \omega1, \Prog{l})), I(\delta, \omega1, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}(\omega1(l)), I(\delta, \omega1, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}([\text{F}, \text{T}]), I(\delta, \omega1, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\text{F}, I(\delta, \omega1, \Prog{any(rest(l)}))) \quad \text{(see NR 1)} \\
+\ &= \textit{or}(\text{F}, \text{T}) \\
+\ &= \text{T}
+\end{align*}
+
+\begin{align*}
+\ & \textbf{NR 1: } I(\delta, \omega1, \Prog{any(rest(l)}))\\
+\ &= I(\delta, \omega^2, \Prog{if empty?(l)} \Prog{ then } la_2 \Prog{ else } la_4) \\
+\ &\quad \textit{with } \omega^2: \\
+\ &\quad \omega2(\Prog{l}) = I(\delta, \omega1, \Prog{rest(l)}) = \textit{rest}(I(\delta, \omega1, \Prog{l})) = \textit{rest}([\text{F}, \text{T}]) = [\text{T}] \\
+\ &= I(\delta, \omega2, \Prog{or(first(l),} \Prog{any(rest(l)}))) \\
+\ &\quad \text{since } I(\delta, \omega2, \Prog{empty(l)}) = \text{F} \\
+\ &= \textit{or}(I(\delta, \omega2, \Prog{first(l)}), I(\delta, \omega2, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}(I(\delta, \omega2, \Prog{l})), I(\delta, \omega2, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}(\omega2(\Prog{l})), I(\delta, \omega2, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\textit{first}([\text{T}]), I(\delta, \omega2, \Prog{any(rest(l)}))) \\
+\ &= \textit{or}(\text{T}, I(\delta, \omega2, \Prog{any(rest(l)}))) \quad \text{(see NR 2)} \\
+\ &= \textit{or}(\text{T}, \text{F}) \\
+\ &= \text{T}
+\end{align*}
+
+
+\begin{align*}
+\ & \textbf{NR 2: } I(\delta, \omega2, \Prog{any(rest(l)})) \\
+\ &= I(\delta, \omega^3, \Prog{if empty?(l) then } la_2 \Prog{else} la_4) \\
+\ &\quad \textit{with } \omega^3: \\
+\ &\quad \omega3(\Prog{l}) = I(\delta, \omega2, \Prog{rest(l)}) = \textit{rest}(I(\delta, \omega2, \Prog{l})) = \textit{rest}([\text{T}]) = [ ] \\
+\ &= I(\delta, \omega3, \text{F}) \\
+\ &= \text{F} \\
+\ &\quad \textit{since } I(\delta, \omega3, \Prog{empty(l)}) = \text{T}
+\end{align*}
+
+
+
+\task
+Induction proof of the \texttt{pow(a,b)} function: \\
+\begin{enumerate}
+    \item  Base case: $\omega(y) = 0 $
+
+\begin{align*}
+& I(\delta, \omega, \underline{\texttt{pow}(x, y))} \\
+    = \ & I(\delta, \omega, \ifThenElse{eq?(y,0)}{1}{mul(x,pow(x,minus(y,1)))} \\
+= \ & I(\delta, \omega, 1) \\
+& \quad \textit{since } I(\delta, \omega, \underline{\texttt{eq?}(y, 0))} \implies eq?(\omega(y), 0) \implies eq?(0, 0) \xrightarrow{} \text{true} \\
+= \ & 1 \\
+= \ & \omega(x)^0 \\
+= \ & \omega(x)^{\omega(y)}
+\end{align*}
+
+\item Hypothesis to prove: 
+\[
+\forall \omega \in \text{ENV} : 
+I(\delta, \omega, \text{pow}(x, y)) = \omega(x)^{\omega(y)} 
+\quad \text{if} \quad \omega(x) \geq 0, \omega(y) \geq 0
+\]
+
+\item Inductive step: $\omega(y) = k + 1$
+
+
+\begin{align*}
+& I(\delta, \omega, \underline{\texttt{pow(x,y)}}\\
+= \ & I(\delta, \omega, \ifThenElse{eq?(y,0}{1}{\texttt{mul(x,pow(x,minus(y,1)))}} \\
+= \ & I(\delta, \omega, \underline{\texttt{mul(x, pow(x, minus(y, 1)))}}) \\
+& \quad \textit{since } I(\delta, \omega, \underline{\texttt{eq?(y, 0)}}) \implies eq?(\omega(y), 0) \implies eq?(k+1, 0) \xrightarrow{} \textit{false} \\
+= \ & I(\delta, \omega', \underline{\texttt{mul(a, pow(a, b))}} \\
+&\quad \omega'(a) = I(\delta, \omega, \underline{\texttt{{x}}}) \implies \omega(x) \\
+&\quad \omega'(b) = I(\delta, \omega, \underline{minus(\omega(y), \omega(1))} \implies \omega(y) - \omega(1) = k + 1 -1 = k \\
+= \ & I(\delta, \omega'', \underline{\texttt{mul(a, b)}}) \\
+&\quad \omega''(a) = I(\delta, \omega', \underline{\texttt{a}}) \implies \omega'(a) \implies \omega(x) \\
+&\quad \omega''(b) = I(\delta, \omega', \underline{\texttt{pow(a,b)}}) \implies pow(\omega'(a), \omega'(b)) = \omega'(a)^{\omega'(b)} = \omega(x)^k = \omega(x)^{\omega(y)}
+= &\omega(x)*\omega(x)^k \\
+=&\omega(x)^{k+1} \\
+=&\omega(x)^{\omega(y)}
+\end{align*}
+\end{enumerate}
+
+Induction proof of the \texttt{div(a,b)} function:
+\begin{enumerate}
+    \item Base case: $\omega(x)=0$
+
+\begin{align*}
+& I(\delta, \omega, \underline{\texttt{div}(x, y))} \\
+    = \ & I(\delta, \omega, \ifThenElse{lt?(x,y)}{0}{\texttt{plus(div(minus(x,y),y),1)}} \\
+= \ & I(\delta, \omega, 0) \\
+& \quad \textit{since } I(\delta, \omega, \underline{\texttt{lt?}(x, y))} \implies lt?(\omega(x), \omega(y)) \implies lt?(0, \omega(y)) \xrightarrow{} \textit{true} \\
+= \ & 0 < \omega(y) \xrightarrow{} \textit{true, since $\omega(y)>0$} \\
+\end{align*}   
+\item Hypothesis to prove: 
+\[
+\forall \omega \in \mathrm{ENV}:\ I(\delta, \omega, \mathrm{div}(\mathbf{x}, \mathbf{y})) = \lfloor \omega(\mathbf{x}) \div \omega(\mathbf{y}) \rfloor \quad \text{if } \omega(\mathbf{x}) \geq 0,\ \omega(\mathbf{y}) > 0
+\]
+
+\item Inductive step $\omega(x)=k+1$
+\begin{align*}
+  & I(\delta, \omega, \text{div}(x, y)) \\
+    = \ & I(\delta, \omega, \ifThenElse{lt?(x,y)}{0}\texttt{plus(div(minus(x,y),y),1}\\ 
+    = \ & I(\delta, \omega, \underline{\texttt{plus(div(minus(x,y),y),1}}\\
+    & \quad \textit{Case 1: $ \omega(x) < \omega(y)$ } I(\delta, \omega, \underline{\texttt{lt?(x,y)}}) \implies lt?(\omega(x), \omega(y)) \implies k + 1 < \omega(y) \implies 0 \xrightarrow{} true \\
+    & \quad \textit{Case 2: $\omega(x) \geq \omega(y)$ } I(\delta, \omega, \underline{\texttt{lt?(x,y)}}) \implies lt?(\omega(x), \omega(y)) \implies k+1>\omega(y) \xrightarrow{} false \\
+= & I(\delta, \omega, \underline{\texttt{plus(div(minus(x,y),y),1)}}) \\
+= & I(\delta, \omega', \underline{\texttt{plus(div(a,b),1)}} \\
+& \quad \omega'(a) = I(\delta, \omega, \underline{\texttt{minus(x,y)}} \implies minus(\omega(x), \omega(y)) \implieas minus(k+1, \omega(y)) \implies k + 1 - \omega(y) \\
+& \quad \omega'(b) = I(\delta, \omega, y) \implies \omega(y) \\
+= & I(\delta, \omega, \underline{\texttt{plus(a, 1)}}) \\
+& \quad \omega''(a) = I(\delta, \omega', \underline{\texttt{div(a,b)}}) \implies div(\omega'(a), \omega'(b)) \implies \omega'(a) \div \omega'(b) \implies (k+1 - \omega(y)) \div \omega'(y)) \\
+= & \omega''(a) + 1 \\
+= & ((k+1) \div \omega(y)) + 1 \\
+= & \frac{k}{\omega(y)} + \frac{1}{\omega(y)} - \frac{\omega(y)}{\omega(y)} + 1 \\
+= & \frac{k}{\omega(y)} + \frac{1}{\omega(y)} - 1 + 1 \\
+= & \frac{k+1}{\omega(y)} \\
+= & \frac{\omega(x)}{\omega(y)} = \omega(x) \div \omega(y)
+\end{align*}
+\end{enumerate}
+
+\task
+\begin{center}
+\textbf{1. (sum(as) != 0) == !allZero(as)}
+\end{center}
+
+Lemma 1: \texttt{(x == 0 \&\& y == 0) == (x + y == 0)}    \\
+Lemma 2: \texttt{(x != 0 || y != 0) == (x + y != 0)} \\
+Base: \texttt{as == Nil}
+\begin{verbatim}
+sum(Nil) != 0
+sum(Nil) != sum(Nil)        def. sum. r.l.
+false                       logic/arithm
+!true                       logic/arithm
+!allZero(Nil)               def allZero. r.l.
+\end{verbatim}
+
+\textbf{Induction step:} Show the assumption holds for \texttt{a::as}
+
+\begin{verbatim}
+sum(a::as) != 0 
+a + sum(as) != 0            def sum. l.r.
+a != 0 || sum(as) != 0      Lemma 2 r.l.
+a != 0 || !allZero(as)      Hypoth. l.r.
+!(a == 0 || allZero(as))    De Morgan's law
+!allZero(a::as)             def. allZero. r.l
+\end{verbatim}
+
+\newpage
+
+\begin{center}
+\textbf{2. bigOr(push(as, bs)) == bigOr(as) $||$ bigOr(bs)}
+\end{center}
+
+Base: \texttt{as == Nil}
+\begin{verbatim}
+bigOr(push(Nil, bs))
+bigOr(bs)                   def. push. l.r
+false   || bogOr(bs)        logic/arithm
+bogOr(Nil) || bigOr(bs)     def bigOr r.l
+\end{verbatim}
+
+\textbf{Induction step:} Show the assumption holds for \texttt{a::as}
+
+\begin{verbatim}
+bigOr(push(a::as, bs))
+bigOr(a::push(as, bs))          def. push. l.r.
+a || bigOr(push(as, bs))        def. bigOr. l.r.
+a || bigOr(as) || bigOr(bs)     Hypoth. l.r.
+bigOr(a::as) || bigOr(bs)       def. bigOr. r.l.
+\end{verbatim}
+
+\vspace{2cm}
+
+\begin{center}
+\textbf{3. bigOr(as) == bigOr(evens(as)) $||$ bigOr(odds(bs))}
+\end{center}
+
+Base: \texttt{as == Nil}
+\begin{verbatim}
+bigOr(Nil)
+false                                       def. bigOr. l.r
+false   || false                            logic/arithm
+bogOr(Nil) || false                         def bigOr r.l
+bogOr(Nil) || bigOr(Nil)                    def. bigOr. r. l.
+bogOr(evens(Nil)) || bigOr(Nil)             def. evens. r. l.
+bogOr(evens(Nil)) || bigOr(odds(Nil))       def. odds. r. l.
+\end{verbatim}
+
+\textbf{Induction step:} Show the assumption holds for \texttt{a::y::as}
+
+\begin{verbatim}
+bigOr(a::y::as)
+a || bigOr(y::as)                                   def bigOr. l.r.
+a || y || bigOr(as)                                 def bigOr. l.r.
+a || bigOr(evens(as)) || y || bigOr(odds(as))       Hypoth. l.r.
+bigOr(a::evens(as)) || y || bigOr(odds(as))         def. evens. r.l.
+bigOr(a::evens(as)) || bigOr(y::odds(as))           def. odds. r.l.
+bigOr(evens(a::y::as)) || bigOr(y::odds(as))        def. evens r.l.
+bigOr(evens(a::y::as)) || bigOr(odds(a::y::as))     def. odds r.l.
+\end{verbatim}
+
+
+\end{document}
