@@ -1,0 +1,94 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(test, Some(120df555-e7b8-46fe-8543-ecae3ad42f66), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / test[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsPublicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Lists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operators[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Sequence Expressions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Anonymous Functions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Records[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Loops[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Misc[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasic:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsPublic:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Lists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operators[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Sequence Expressions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Anonymous Functions *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: Interpretation of node NodeFuncLit(List(i),NodePlus(NodeVariable(i),NodeValue(ExpInteger(4)))) not implemented.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:151)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:88)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:79)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Main$.evaluateTest(Main.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:23)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at TestsPublic.$anonfun$new$4(TestsPublic.scala:110)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Records *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: Interpretation of node NodeRecordInst(foo,List(NodeValue(ExpInteger(1)), NodeValue(ExpInteger(4)), NodePlus(NodeValue(ExpInteger(2)),NodeValue(ExpInteger(10))))) not implemented.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:151)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpretStmt(Interpreter.scala:157)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$4(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$4$adapted(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.List.foreach(List.scala:333)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:79)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Main$.evaluateTest(Main.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:23)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Loops *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  Expected EvaluationResultSuccess(ExpInteger(8), ""), but got EvaluationResultSuccess(ExpInteger(15), "") (AbstractTests.scala:26)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Misc *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  scala.NotImplementedError: Interpretation of node NodeFuncLit(List(a, c),NodePlus(NodeDiv(NodeVariable(a),NodeValue(ExpInteger(2))),NodeDiv(NodeVariable(c),NodeValue(ExpInteger(2))))) not implemented.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:151)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpretStmt(Interpreter.scala:157)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$4(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$4$adapted(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.List.foreach(List.scala:333)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:144)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:79)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Main$.evaluateTest(Main.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:27)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at AbstractTests.expectResult(AbstractTests.scala:23)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 1 second, 94 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 40[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 36, failed 4, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 4 TESTS FAILED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	TestsPublic[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 2 s, completed 03.06.2025, 18:18:59[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

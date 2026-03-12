@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuite hostname="DESKTOP-IKBDEUF" name="TestsPublic" tests="7" errors="0" failures="1" skipped="0" time="1.225" timestamp="2025-06-04T01:46:27">
+          <properties>
+      <property name="java.specification.version" value="24"/><property name="sun.cpu.isalist" value="amd64"/><property name="sun.jnu.encoding" value="Cp1252"/><property name="java.class.path" value="C:\Program Files\sbt\bin\sbt-launch.jar"/><property name="java.vm.vendor" value="Oracle Corporation"/><property name="sun.arch.data.model" value="64"/><property name="user.variant" value=""/><property name="jline.shutdownhook" value="false"/><property name="java.vendor.url" value="https://java.oracle.com/"/><property name="user.timezone" value="Europe/Vienna"/><property name="java.vm.specification.version" value="24"/><property name="os.name" value="Windows 11"/><property name="sun.java.launcher" value="SUN_STANDARD"/><property name="user.country" value="DE"/><property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-24\bin"/><property name="sun.java.command" value="xsbt.boot.Boot"/><property name="jdk.debug" value="release"/><property name="sun.cpu.endian" value="little"/><property name="user.home" value="C:\Users\Brocoli"/><property name="user.language" value="de"/><property name="java.specification.vendor" value="Oracle Corporation"/><property name="sbt.ipcsocket.tmpdir" value="C:\Users\Brocoli\AppData\Local\Temp\.sbt4a1b83cc\ipcsocket"/><property name="swoval.tmpdir" value="C:\Users\Brocoli\AppData\Local\Temp\.sbt4a1b83cc\swoval"/><property name="java.version.date" value="2025-04-15"/><property name="java.home" value="C:\Program Files\Java\jdk-24"/><property name="file.separator" value="\"/><property name="java.vm.compressedOopsMode" value="32-bit"/><property name="line.separator" value="
+"/><property name="java.vm.specification.vendor" value="Oracle Corporation"/><property name="java.specification.name" value="Java Platform API Specification"/><property name="user.script" value=""/><property name="jline.esc.timeout" value="0"/><property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/><property name="java.runtime.version" value="24.0.1+9-30"/><property name="user.name" value="Brocoli"/><property name="stdout.encoding" value="cp437"/><property name="path.separator" value=";"/><property name="os.version" value="10.0"/><property name="jna.nosys" value="true"/><property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/><property name="log4j.ignoreTCL" value="true"/><property name="file.encoding" value="UTF-8"/><property name="jnidispatch.path" value="C:\Users\Brocoli\AppData\Local\Temp\jna-1814994280\jna4466010079214933050.dll"/><property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/><property name="jna.loaded" value="true"/><property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/><property name="java.io.tmpdir" value="C:\Users\Brocoli\AppData\Local\Temp\"/><property name="java.version" value="24.0.1"/><property name="user.dir" value="C:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP"/><property name="os.arch" value="amd64"/><property name="java.vm.specification.name" value="Java Virtual Machine Specification"/><property name="sun.os.patch.level" value=""/><property name="native.encoding" value="Cp1252"/><property name="java.library.path" value="C:\Program Files\Java\jdk-24\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Java\jdk-24\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Java\jdk-24\bin;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Git\bin;C:\Program Files\Java\jdk-24\bin;C:\Program Files\Java\jdk-17\bin;C:\Program Files\sbt\bin;C:\Program Files\Graphviz\bin;C:\Users\Brocoli\AppData\Local\Microsoft\WindowsApps;C:\Users\Brocoli\AppData\Roaming\npm;C:\Users\Brocoli\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\Java\jdk-24\bin;;c:\Users\Brocoli\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand;C:\Program Files\Git\bin;C:\Program Files\Git\cmd;."/><property name="java.vm.info" value="mixed mode, sharing"/><property name="stderr.encoding" value="cp437"/><property name="java.vendor" value="Oracle Corporation"/><property name="java.vm.version" value="24.0.1+9-30"/><property name="scala.ext.dirs" value="C:\Users\Brocoli\.sbt\1.0\java9-rt-ext-oracle_corporation_24_0_1"/><property name="sun.io.unicode.encoding" value="UnicodeLittle"/><property name="java.class.version" value="68.0"/>
+    </properties>
+          <testcase classname="TestsPublic" name="Lists" time="0.466">
+                      
+                    </testcase><testcase classname="TestsPublic" name="Operators" time="0.011">
+                      
+                    </testcase><testcase classname="TestsPublic" name="Sequence Expressions" time="0.276">
+                      
+                    </testcase><testcase classname="TestsPublic" name="Anonymous Functions" time="0.108">
+                      
+                    </testcase><testcase classname="TestsPublic" name="Records" time="0.097">
+                      <failure message="foo class name not defined" type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: foo class name not defined
+	at Interpreter.$anonfun$interpret$8(Interpreter.scala:167)
+	at scala.collection.immutable.Map$EmptyMap$.getOrElse(Map.scala:226)
+	at Interpreter.interpret(Interpreter.scala:167)
+	at Interpreter.interpretStmt(Interpreter.scala:202)
+	at Interpreter.$anonfun$interpret$6(Interpreter.scala:149)
+	at Interpreter.$anonfun$interpret$6$adapted(Interpreter.scala:149)
+	at scala.collection.immutable.List.foreach(List.scala:333)
+	at Interpreter.interpret(Interpreter.scala:149)
+	at Interpreter.interpret(Interpreter.scala:81)
+	at Main$.evaluateTest(Main.scala:66)
+	at AbstractTests.expectResult(AbstractTests.scala:27)
+	at AbstractTests.expectResult(AbstractTests.scala:23)
+	at TestsPublic.$anonfun$new$5(TestsPublic.scala:178)
+	at scala.runtime.java8.JFunction0$mcV$sp.apply(JFunction0$mcV$sp.scala:18)
+	at org.scalatest.OutcomeOf.outcomeOf(OutcomeOf.scala:85)
+	at org.scalatest.OutcomeOf.outcomeOf$(OutcomeOf.scala:83)
+	at org.scalatest.OutcomeOf$.outcomeOf(OutcomeOf.scala:104)
+	at org.scalatest.Transformer.apply(Transformer.scala:22)
+	at org.scalatest.Transformer.apply(Transformer.scala:20)
+	at org.scalatest.funsuite.AnyFunSuiteLike$$anon$1.apply(AnyFunSuiteLike.scala:226)
+	at org.scalatest.TestSuite.withFixture(TestSuite.scala:196)
+	at org.scalatest.TestSuite.withFixture$(TestSuite.scala:195)
+	at AbstractTests.org$scalatest$concurrent$TimeLimitedTests$$super$withFixture(AbstractTests.scala:8)
+	at org.scalatest.concurrent.TimeLimitedTests.$anonfun$withFixture$3(TimeLimitedTests.scala:154)
+	at org.scalatest.enablers.Timed$$anon$1.timeoutAfter(Timed.scala:127)
+	at org.scalatest.concurrent.TimeLimits$.failAfterImpl(TimeLimits.scala:282)
+	at org.scalatest.concurrent.TimeLimitedTests.withFixture(TimeLimitedTests.scala:153)
+	at org.scalatest.concurrent.TimeLimitedTests.withFixture$(TimeLimitedTests.scala:150)
+	at AbstractTests.withFixture(AbstractTests.scala:8)
+	at org.scalatest.funsuite.AnyFunSuiteLike.invokeWithFixture$1(AnyFunSuiteLike.scala:224)
+	at org.scalatest.funsuite.AnyFunSuiteLike.$anonfun$runTest$1(AnyFunSuiteLike.scala:236)
+	at org.scalatest.SuperEngine.runTestImpl(Engine.scala:306)
+	at org.scalatest.funsuite.AnyFunSuiteLike.runTest(AnyFunSuiteLike.scala:236)
+	at org.scalatest.funsuite.AnyFunSuiteLike.runTest$(AnyFunSuiteLike.scala:218)
+	at org.scalatest.funsuite.AnyFunSuite.runTest(AnyFunSuite.scala:1564)
+	at org.scalatest.funsuite.AnyFunSuiteLike.$anonfun$runTests$1(AnyFunSuiteLike.scala:269)
+	at org.scalatest.SuperEngine.$anonfun$runTestsInBranch$1(Engine.scala:413)
+	at scala.collection.immutable.List.foreach(List.scala:333)
+	at org.scalatest.SuperEngine.traverseSubNodes$1(Engine.scala:401)
+	at org.scalatest.SuperEngine.runTestsInBranch(Engine.scala:396)
+	at org.scalatest.SuperEngine.runTestsImpl(Engine.scala:475)
+	at org.scalatest.funsuite.AnyFunSuiteLike.runTests(AnyFunSuiteLike.scala:269)
+	at org.scalatest.funsuite.AnyFunSuiteLike.runTests$(AnyFunSuiteLike.scala:268)
+	at org.scalatest.funsuite.AnyFunSuite.runTests(AnyFunSuite.scala:1564)
+	at org.scalatest.Suite.run(Suite.scala:1114)
+	at org.scalatest.Suite.run$(Suite.scala:1096)
+	at org.scalatest.funsuite.AnyFunSuite.org$scalatest$funsuite$AnyFunSuiteLike$$super$run(AnyFunSuite.scala:1564)
+	at org.scalatest.funsuite.AnyFunSuiteLike.$anonfun$run$1(AnyFunSuiteLike.scala:273)
+	at org.scalatest.SuperEngine.runImpl(Engine.scala:535)
+	at org.scalatest.funsuite.AnyFunSuiteLike.run(AnyFunSuiteLike.scala:273)
+	at org.scalatest.funsuite.AnyFunSuiteLike.run$(AnyFunSuiteLike.scala:272)
+	at org.scalatest.funsuite.AnyFunSuite.run(AnyFunSuite.scala:1564)
+	at org.scalatest.tools.Framework.org$scalatest$tools$Framework$$runSuite(Framework.scala:321)
+	at org.scalatest.tools.Framework$ScalaTestTask.execute(Framework.scala:517)
+	at sbt.TestRunner.runTest$1(TestFramework.scala:153)
+	at sbt.TestRunner.run(TestFramework.scala:168)
+	at sbt.TestFramework$$anon$3$$anonfun$$lessinit$greater$1.$anonfun$apply$1(TestFramework.scala:336)
+	at sbt.TestFramework$.sbt$TestFramework$$withContextLoader(TestFramework.scala:296)
+	at sbt.TestFramework$$anon$3$$anonfun$$lessinit$greater$1.apply(TestFramework.scala:336)
+	at sbt.TestFramework$$anon$3$$anonfun$$lessinit$greater$1.apply(TestFramework.scala:336)
+	at sbt.TestFunction.apply(TestFramework.scala:348)
+	at sbt.Tests$.$anonfun$toTask$1(Tests.scala:436)
+	at sbt.std.Transform$$anon$3.$anonfun$apply$2(Transform.scala:47)
+	at sbt.std.Transform$$anon$4.work(Transform.scala:69)
+	at sbt.Execute.$anonfun$submit$2(Execute.scala:283)
+	at sbt.internal.util.ErrorHandling$.wideConvert(ErrorHandling.scala:24)
+	at sbt.Execute.work(Execute.scala:292)
+	at sbt.Execute.$anonfun$submit$1(Execute.scala:283)
+	at sbt.ConcurrentRestrictions$$anon$4.$anonfun$submitValid$1(ConcurrentRestrictions.scala:265)
+	at sbt.CompletionService$$anon$2.call(CompletionService.scala:65)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1095)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:619)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+</failure>
+                    </testcase><testcase classname="TestsPublic" name="Loops" time="0.023">
+                      
+                    </testcase><testcase classname="TestsPublic" name="Misc" time="0.244">
+                      
+                    </testcase>
+          <system-out><![CDATA[]]></system-out>
+          <system-err><![CDATA[]]></system-err>
+        </testsuite>

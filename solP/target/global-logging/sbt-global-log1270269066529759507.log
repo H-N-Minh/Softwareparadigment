@@ -1,0 +1,85 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(test, Some(b1f8b09d-5c70-4998-a78d-b49c2a955c12), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / test[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 2 Scala sources to C:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\target\scala-2.13\classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Interpreter.scala:222:23: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: ExpAnonFunction(_, _, _), ExpBuiltin(_), ExpFunction(_, _), ExpInteger(_), ExpList(_), ExpOperators(_), ExpString(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m      while (interpret(e, fe, condition) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 6 Scala sources to C:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\target\scala-2.13\classes ...[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Parser.scala:28:22: non-variable type argument Node in type pattern List[Node] (the underlying of List[Node]) is unchecked since it is eliminated by erasure[0m
+[0m[[0m[33mwarn[0m] [0m[0m      case (e, args: List[Node]) => NodeCall(e, args)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\src\main\scala\Interpreter.scala:222:23: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following inputs: ExpAnonFunction(_, _, _), ExpBuiltin(_), ExpFunction(_, _), ExpInteger(_), ExpList(_), ExpOperators(_), ExpString(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m      while (interpret(e, fe, condition) match {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 5 Scala sources to C:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\target\scala-2.13\test-classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasic:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsPublicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Lists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operators[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Sequence Expressions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Anonymous Functions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Records[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Loops[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Misc[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsPublic:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Lists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operators[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Sequence Expressions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Anonymous Functions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m- Records *** FAILED ***[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  java.lang.IllegalArgumentException: foo class name not defined[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$8(Interpreter.scala:167)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.Map$EmptyMap$.getOrElse(Map.scala:226)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:167)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpretStmt(Interpreter.scala:202)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$6(Interpreter.scala:149)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.$anonfun$interpret$6$adapted(Interpreter.scala:149)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at scala.collection.immutable.List.foreach(List.scala:333)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:149)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Interpreter.interpret(Interpreter.scala:81)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  at Main$.evaluateTest(Main.scala:66)[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m  ...[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Loops[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Misc[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 3 seconds, 907 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 40[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 39, failed 1, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[31m*** 1 TEST FAILED ***[0m[0m
+[0m[[0m[31merror[0m] [0m[0mFailed tests:[0m
+[0m[[0m[31merror[0m] [0m[0m	TestsPublic[0m
+[0m[[0m[31merror[0m] [0m[0m(Test / [31mtest[0m) sbt.TestsFailedException: Tests unsuccessful[0m
+[0m[[0m[31merror[0m] [0m[0mTotal time: 63 s (0:01:03.0), completed 04.06.2025, 01:46:12[0m
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(shell, None, None)[0m

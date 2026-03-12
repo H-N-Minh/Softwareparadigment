@@ -1,0 +1,45 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(test, Some(cb3592ce-0bc5-4e28-9140-23ee5f525407), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Test / test[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mcompiling 1 Scala source to C:\Users\Brocoli\Desktop\Softwareparadigment\group-90\solP\target\scala-2.13\test-classes ...[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsPublicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Lists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operators[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Sequence Expressions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Anonymous Functions[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Records[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Loops[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Misc[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasicParser:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mTestsBasic:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Constants[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Builtin[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Equality[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Operator Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- If Advanced[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Simple[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Constant[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Parameters[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Recursion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Function Mutual[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- Interpretation Order[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- AD Example[0m[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
+[0m[[0m[33mwarn[0m] [0m[0mCanceling execution...[0m
