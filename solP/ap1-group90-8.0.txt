@@ -1,0 +1,192 @@
+Test report of group-90 (Parser):
+
+TestsBasic from Framework:
+  basic_ad_example_1 - OK
+  basic_bultin_1 - OK
+  basic_bultin_10 - OK
+  basic_bultin_11 - OK
+  basic_bultin_12 - OK
+  basic_bultin_13 - OK
+  basic_bultin_14 - OK
+  basic_bultin_15 - OK
+  basic_bultin_16 - OK
+  basic_bultin_17 - OK
+  basic_bultin_18 - OK
+  basic_bultin_19 - OK
+  basic_bultin_2 - OK
+  basic_bultin_20 - OK
+  basic_bultin_21 - OK
+  basic_bultin_22 - OK
+  basic_bultin_23 - OK
+  basic_bultin_24 - OK
+  basic_bultin_25 - OK
+  basic_bultin_26 - OK
+  basic_bultin_3 - OK
+  basic_bultin_4 - OK
+  basic_bultin_5 - OK
+  basic_bultin_6 - OK
+  basic_bultin_7 - OK
+  basic_bultin_8 - OK
+  basic_bultin_9 - OK
+  basic_constant_1 - OK
+  basic_constant_2 - OK
+  basic_constant_3 - OK
+  basic_constant_4 - OK
+  basic_constant_5 - OK
+  basic_constant_6 - OK
+  basic_equality_1 - OK
+  basic_equality_2 - OK
+  basic_equality_3 - OK
+  basic_equality_4 - OK
+  basic_equality_5 - OK
+  basic_equality_6 - OK
+  basic_equality_7 - OK
+  basic_equality_8 - OK
+  basic_equality_9 - OK
+  basic_function_constant_1 - OK
+  basic_function_mutual_1 - OK
+  basic_function_parameters_1 - OK
+  basic_function_recursion_1 - OK
+  basic_function_recursion_2 - OK
+  basic_function_simple_1 - OK
+  basic_if_advanced_1 - OK
+  basic_if_advanced_2 - OK
+  basic_if_advanced_3 - OK
+  basic_if_advanced_4 - OK
+  basic_if_advanced_5 - OK
+  basic_if_simple_1 - OK
+  basic_if_simple_2 - OK
+  basic_if_simple_3 - OK
+  basic_if_simple_4 - OK
+  basic_if_simple_5 - OK
+  basic_interpretation_order_1 - OK
+  basic_interpretation_order_2 - OK
+You didn't break the basic functionality. Good job!
+
+List Literals:
+  lists1 - OK [0.2 / 0.2]
+  lists2 - OK [0.2 / 0.2]
+  lists3 - OK [0.2 / 0.2]
+  lists4 - OK [0.2 / 0.2]
+  lists5 - OK [0.2 / 0.2]
+  lists-bad1 - OK [0.0 / -0.5]
+  lists-bad2 - OK [0.0 / -0.5]
+  lists-bad3 - OK [0.0 / -0.5]
+  lists-bad4 - OK [0.0 / -0.5]
+  lists-bad5 - OK [0.0 / -0.5]
+Total for this task: 1.0 / 1.0
+
+Multiplication/Comparison Operators:
+  operators1 - OK [0.1 / 0.1]
+  operators2 - OK [0.1 / 0.1]
+  operators3 - OK [0.1 / 0.1]
+  operators4 - OK [0.1 / 0.1]
+  operators5 - OK [0.1 / 0.1]
+  operators6 - OK [0.1 / 0.1]
+  operators7 - OK [0.1 / 0.1]
+  operators8 - OK [0.1 / 0.1]
+  operators9 - OK [0.1 / 0.1]
+  operators10 - OK [0.1 / 0.1]
+  operators-bad1 - OK [0.0 / -0.5]
+  operators-bad2 - OK [0.0 / -0.5]
+  operators-bad3 - OK [0.0 / -0.5]
+  operators-bad4 - OK [0.0 / -0.5]
+  operators-bad5 - OK [0.0 / -0.5]
+Total for this task: 1.0 / 1.0
+
+Sequence Expression:
+  seq1 - OK [0.2 / 0.2]
+  seq2 - OK [0.2 / 0.2]
+  seq3 - OK [0.2 / 0.2]
+  seq4 - OK [0.2 / 0.2]
+  seq5 - OK [0.2 / 0.2]
+  seq6 - OK [0.2 / 0.2]
+  seq7 - OK [0.2 / 0.2]
+  seq8 - OK [0.2 / 0.2]
+  seq9 - OK [0.1 / 0.1]
+  seq10 - OK [0.1 / 0.1]
+  seq11 - OK [0.1 / 0.1]
+  seq12 - OK [0.1 / 0.1]
+  seq-bad1 - OK [0.0 / -0.25]
+  seq-bad2 - OK [0.0 / -0.5]
+  seq-bad3 - OK [0.0 / -0.5]
+  seq-bad4 - OK [0.0 / -0.5]
+  seq-bad5 - OK [0.0 / -0.5]
+  seq-bad6 - OK [0.0 / -0.25]
+  seq-bad7 - OK [0.0 / -0.5]
+Total for this task: 2.0 / 2.0
+
+Anonymous Functions:
+  anon1 - OK [0.2 / 0.2]
+  anon2 - OK [0.2 / 0.2]
+  anon3 - OK [0.2 / 0.2]
+  anon4 - OK [0.1 / 0.1]
+  anon5 - OK [0.1 / 0.1]
+  anon6 - OK [0.1 / 0.1]
+  anon7 - OK [0.1 / 0.1]
+  anon-bad1 - OK [0.0 / -0.5]
+  anon-bad2 - OK [0.0 / -0.5]
+  anon-bad3 - OK [0.0 / -0.5]
+  anon-bad4 - OK [0.0 / -0.5]
+  anon-bad5 - OK [0.0 / -0.5]
+Total for this task: 1.0 / 1.0
+
+Records and Dot-Operator:
+  record1 - OK [0.2 / 0.2]
+  record2 - OK [0.2 / 0.2]
+  record3 - OK [0.3 / 0.3]
+  record4 - OK [0.2 / 0.2]
+  record5 - OK [0.2 / 0.2]
+  record6 - OK [0.2 / 0.2]
+  record7 - OK [0.2 / 0.2]
+  dotop1 - OK [0.1 / 0.1]
+  dotop2 - OK [0.1 / 0.1]
+  dotop3 - OK [0.1 / 0.1]
+  dotop4 - OK [0.1 / 0.1]
+  dotop5 - OK [0.1 / 0.1]
+  record-bad1 - OK [0.0 / -0.5]
+  record-bad2 - OK [0.0 / -0.5]
+  record-bad3 - OK [0.0 / -0.5]
+  record-bad4 - OK [0.0 / -0.5]
+  record-bad5 - OK [0.0 / -0.5]
+  dotop-bad1 - OK [0.0 / -0.25]
+  dotop-bad2 - OK [0.0 / -0.25]
+  dotop-bad3 - OK [0.0 / -0.25]
+  dotop-bad4 - OK [0.0 / -0.25]
+  dotop-bad5 - OK [0.0 / -0.25]
+Total for this task: 2.0 / 2.0
+
+Loops:
+  loop1 - OK [0.2 / 0.2]
+  loop2 - OK [0.2 / 0.2]
+  loop3 - OK [0.2 / 0.2]
+  loop4 - OK [0.2 / 0.2]
+  loop5 - OK [0.2 / 0.2]
+  loop-bad1 - OK [0.0 / -0.25]
+  loop-bad2 - FAIL [-0.25 / -0.25]
+  loop-bad3 - OK [0.0 / -0.25]
+  loop-bad4 - OK [0.0 / -0.25]
+  loop-bad5 - FAIL [-0.25 / -0.25]
+Total for this task: 0.5 / 1
+
+BONUS: Break and Continue:
+  breakCont1 - OK [0.1 / 0.1]
+  breakCont2 - OK [0.1 / 0.1]
+  breakCont3 - OK [0.1 / 0.1]
+  breakCont4 - OK [0.1 / 0.1]
+  breakCont5 - OK [0.1 / 0.1]
+  breakCont-bad1 - OK [0.0 / -0.5]
+  breakCont-bad2 - OK [0.0 / -0.5]
+Total for this BONUS task: 0.5 / 0.5
+
+Total points for the submission: 7.5 / 8.0
+
+Total BONUS points for the submission: 0.5 / 0.5
+
+
+Notes:
+*) Loops:
+   loop-bad2: Empty loop bodies are incorrectly accepted (should be at least 1 stmt!).
+
+   loop-bad5: Variable _declarations_ are incorrectly accepted inside while bodies (only varAssign
+              or loop are allowed!)

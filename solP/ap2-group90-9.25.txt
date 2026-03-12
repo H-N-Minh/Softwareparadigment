@@ -1,0 +1,116 @@
+Test report of Group 90 (Interpreter):
+
+TestsBasic from Framework:
+  basic-ad-example1 - OK
+  basic-builtin1 - OK
+  basic-builtin2 - OK
+  basic-builtin3 - OK
+  basic-builtin4 - OK
+  basic-constants1 - OK
+  basic-constants2 - OK
+  basic-constants3 - OK
+  basic-function-constant - OK
+  basic-function-fibs - OK
+  basic-function-mutual - OK
+  basic-if1 - OK
+  basic-if2 - OK
+  basic-if3 - OK
+  basic-op1 - OK
+  basic-op2 - OK
+You didn't break the basic functionality. Good job!
+
+List Literals:
+  lists1 - OK [0.2 / 0.2]
+  lists2 - OK [0.2 / 0.2]
+  lists3 - OK [0.2 / 0.2]
+  lists4 - OK [0.2 / 0.2]
+  lists5 - OK [0.2 / 0.2]
+Total for this task: 1.0 / 1
+
+Operators:
+  ops1 - OK [0.25 / 0.25]
+  ops2 - OK [0.25 / 0.25]
+  ops3 - OK [0.25 / 0.25]
+  ops4 - ERR [0 / 0.25]
+  ops5 - ERR [0 / 0.25]
+  ops6 - OK [0.25 / 0.25]
+  ops7 - OK [0.25 / 0.25]
+  ops8 - ERR [0 / 0.25]
+  ops9 - OK [0.25 / 0.25]
+  ops10 - OK [0.25 / 0.25]
+Total for this task: 1.75 / 2.5
+
+Sequence Expressions:
+  seq1 - OK [0.1 / 0.1]
+  seq2 - OK [0.1 / 0.1]
+  seq3 - OK [0.1 / 0.1]
+  seq4 - OK [0.1 / 0.1]
+  seq5 - OK [0.1 / 0.1]
+  seq6 - OK [0.1 / 0.1]
+  seq7 - OK [0.2 / 0.2]
+  seq8 - OK [0.2 / 0.2]
+  seq-shadow1 - OK [0.25 / 0.25]
+  seq-shadow2 - OK [0.25 / 0.25]
+  seq-shadow3 - OK [0.25 / 0.25]
+  seq-shadow4 - OK [0.25 / 0.25]
+  seq-mut1 - OK [0.25 / 0.25]
+  seq-mut2 - OK [0.25 / 0.25]
+  seq-mut3 - OK [0.25 / 0.25]
+  seq-mut4 - OK [0.25 / 0.25]
+Total for this task: 3.0 / 3.0
+
+Anonymous Functions:
+  anon1 - OK [0.2 / 0.2]
+  anon2 - OK [0.2 / 0.2]
+  anon3 - OK [0.2 / 0.2]
+  anon-seq1 - OK [0.1 / 0.1]
+  anon-seq2 - OK [0.1 / 0.1]
+  anon-seq3 - OK [0.2 / 0.2]
+  anon-seq4 - OK [0.2 / 0.2]
+  anon-seq5 - OK [0.2 / 0.2]
+  anon-seq6 - OK [0.2 / 0.2]
+  anon-seq7 - OK [0.2 / 0.2]
+  anon-higherorder1 - OK [0.1 / 0.1]
+  anon-higherorder2 - OK [0.1 / 0.1]
+Total for this task: 2.0 / 2.0
+
+Records and Dot-Op:
+  record1 - ERR [0 / 0.25]
+  record2 - ERR [0 / 0.25]
+  record3 - ERR [0 / 0.25]
+  record4 - ERR [0 / 0.25]
+  record5 - ERR [0 / 0.25]
+  record6 - ERR [0 / 0.25]
+  record7 - ERR [0 / 0.25]
+  record8 - ERR [0 / 0.25]
+Total for this task: 0.0 / 2.0
+
+Loops:
+  loop1 - OK [0.3 / 0.3]
+  loop2 - OK [0.3 / 0.3]
+  loop3 - OK [0.3 / 0.3]
+  loop4 - OK [0.3 / 0.3]
+  loop5 - OK [0.3 / 0.3]
+Total for this task: 1.5 / 1.5
+
+BONUS: Break and Continue:
+  brCont1 - ERR [0 / 0.5]
+  brCont2 - ERR [0 / 0.5]
+  brCont3 - ERR [0 / 0.5]
+  brCont4 - ERR [0 / 0.5]
+  brCont5 - ERR [0 / 0.5]
+Total for this task: 0.0 / 2.5
+
+Total points for the submission: 9.25 / 12.0
+
+Total BONUS points for the submission: 0.0 / 2.5
+
+Notes:
+*) Operators:
+   -ops1: Only multiplication operator works. Also this operator does not work
+    correctly with "+" and "-".
+
+   -ops3, ops4, ops8: cannot use "==" and/or "!=" operator with boolean 
+    literals or lists.
+    
+    

@@ -1,0 +1,13 @@
+$addOne(i) => i+1;
+
+$double(i) => mult(i, 2);
+
+$range(from, to, f) =>
+  if lt?(from, to) then
+    build(f(from), range(addOne(from), to, f))
+  else
+    Nil
+  ;
+
+build(or(True, False), range(0, 5, double))
+
